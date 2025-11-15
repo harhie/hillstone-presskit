@@ -28,23 +28,23 @@ function initializeEventListeners() {
 }
 
 function loadPressItems() {
-    console.log('Ã°ÂÂÂ¥ loadPressItems() Ã¬ÂÂÃ¬ÂÂ');
+    console.log('ÃÂ°ÃÂÃÂÃÂ¥ loadPressItems() ÃÂ¬ÃÂÃÂÃÂ¬ÃÂÃÂ');
     const stored = localStorage.getItem('hillstone_press_items');
     if (stored) {
         try {
             allItems = JSON.parse(stored);
-            console.log('Ã¢ÂÂ LocalStorage Ã«ÂÂ°Ã¬ÂÂ´Ã­ÂÂ° Ã«Â¡ÂÃ«ÂÂ:', allItems.length, 'ÃªÂ°Â');
+            console.log('ÃÂ¢ÃÂÃÂ LocalStorage ÃÂ«ÃÂÃÂ°ÃÂ¬ÃÂÃÂ´ÃÂ­ÃÂÃÂ° ÃÂ«ÃÂ¡ÃÂÃÂ«ÃÂÃÂ:', allItems.length, 'ÃÂªÃÂ°ÃÂ');
         } catch (e) {
-            console.error('Ã¢ÂÂ Error parsing stored data:', e);
+            console.error('ÃÂ¢ÃÂÃÂ Error parsing stored data:', e);
             allItems = getSampleData();
-            console.log('Ã°ÂÂÂ¦ getSampleData() Ã¬ÂÂ¬Ã¬ÂÂ©:', allItems.length, 'ÃªÂ°Â');
+            console.log('ÃÂ°ÃÂÃÂÃÂ¦ getSampleData() ÃÂ¬ÃÂÃÂ¬ÃÂ¬ÃÂÃÂ©:', allItems.length, 'ÃÂªÃÂ°ÃÂ');
         }
     } else {
         allItems = getSampleData();
-        console.log('Ã°ÂÂÂ¦ getSampleData() Ã¬ÂÂ¬Ã¬ÂÂ© (LocalStorage Ã¬ÂÂÃ¬ÂÂ):', allItems.length, 'ÃªÂ°Â');
+        console.log('ÃÂ°ÃÂÃÂÃÂ¦ getSampleData() ÃÂ¬ÃÂÃÂ¬ÃÂ¬ÃÂÃÂ© (LocalStorage ÃÂ¬ÃÂÃÂÃÂ¬ÃÂÃÂ):', allItems.length, 'ÃÂªÃÂ°ÃÂ');
     }
-    console.log('Ã°ÂÂÂ¢ allItems Ã¬ÂµÂÃ¬Â¢Â:', allItems.length, 'ÃªÂ°Â');
-    console.log('Ã¬Â²Â« Ã«Â²ÂÃ¬Â§Â¸ ÃªÂ¸Â°Ã¬ÂÂ¬:', allItems[0]?.title);
+    console.log('ÃÂ°ÃÂÃÂÃÂ¢ allItems ÃÂ¬ÃÂµÃÂÃÂ¬ÃÂ¢ÃÂ:', allItems.length, 'ÃÂªÃÂ°ÃÂ');
+    console.log('ÃÂ¬ÃÂ²ÃÂ« ÃÂ«ÃÂ²ÃÂÃÂ¬ÃÂ§ÃÂ¸ ÃÂªÃÂ¸ÃÂ°ÃÂ¬ÃÂÃÂ¬:', allItems[0]?.title);
     updateCategoryCounts();
     renderPressItems();
 }
@@ -52,7 +52,172 @@ function loadPressItems() {
 function getSampleData() {
     return [
         {
-            id: 'mhzsulx5g4dsj5q890v',
+            id: 'mhuspixfvuj34uhacz',
+            title: '한국-필리핀-싱가포르, 스마트 순환에너지 국제협력 닻 올려',
+            category: 'article',
+            date: '2025-10-24',
+            source: '인천일보',
+            summary: '현장을 찾은 힐스톤파트너스 황라열 대표는 “녹색전환은 기술과 자본이 함께 움직여야 실현 가능하다”며 “민간 자본의 적극적 투입을 통해 현실적 변화를 만들어 내겠다”고 말했다.',
+            link: 'https://www.incheonilbo.com/news/articleView.html?idxno=1306893',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhypfmwdqy01zlt4oni',
+            title: '기후 행동 전략적 파트너십 MOU 체결식',
+            category: 'photo',
+            date: '2025-10-12',
+            source: 'Hillstone',
+            summary: '',
+            link: '',
+            image: 'https://github.com/harhie/siteimage/blob/main/251012-0.JPG?raw=true',
+            images: ["https://github.com/harhie/siteimage/blob/main/251012-0.JPG?raw=true","https://github.com/harhie/siteimage/blob/main/251012_1.JPG?raw=true","https://github.com/harhie/siteimage/blob/main/251012-2.JPG?raw=true","https://github.com/harhie/siteimage/blob/main/251012-3.JPG?raw=true","https://github.com/harhie/siteimage/blob/main/251012-4.JPG?raw=true"]
+        },
+        {
+            id: 'mhyppbaxfbzt34igtz',
+            title: '표창장 수여 및 홍보대사 위촉 (필리핀 경찰청)',
+            category: 'photo',
+            date: '2025-06-25',
+            source: 'Hillstone',
+            summary: '',
+            link: '',
+            image: 'https://i.imgur.com/vTLnzlz.jpeg',
+            images: ["https://i.imgur.com/vTLnzlz.jpeg","https://i.imgur.com/T4eLDBT.jpeg"]
+        },
+        {
+            id: 'mhypq9hw4cxl5ifk75g',
+            title: '포스텍 블록체인 전문가과정 IR 데이 성료…\"기술 넘은 실전, 산업화 가능성에 주목\"',
+            category: 'article',
+            date: '2025-06-08',
+            source: '아시아투데이',
+            summary: '서울대기술지주, 고팍스, 네오유니콘파트너스, 힐스톤인베스트먼트, 포스텍홀딩스 등 주요 벤처캐피탈 관계자들이 참석했다.',
+            link: 'https://www.asiatoday.co.kr/kn/view.php?key=20250608000055467',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhypt8kneltdtdv21sg',
+            title: '필리핀 현지 협업 파트너 미팅 (Manila)',
+            category: 'photo',
+            date: '2024-11-02',
+            source: 'Hillstone',
+            summary: '',
+            link: '',
+            image: 'https://i.imgur.com/sdtJ2Oq.jpeg',
+            images: ["https://i.imgur.com/sdtJ2Oq.jpeg","https://i.imgur.com/MVDJZvp.jpeg","https://i.imgur.com/kWDkb6p.jpeg"]
+        },
+        {
+            id: 'mhypueesxq940xxz3ga',
+            title: '홍콩 OTC USDT 유동성 계약',
+            category: 'photo',
+            date: '2024-03-06',
+            source: 'Hillstone',
+            summary: '',
+            link: '',
+            image: 'https://i.imgur.com/p0u4OhU.jpeg',
+            images: ["https://i.imgur.com/p0u4OhU.jpeg","https://i.imgur.com/IxKUsM5.jpeg"]
+        },
+        {
+            id: 'mhypvasb5uiqg71ylqr',
+            title: '필리핀 (전)대통령 두테르테 장학재단 설립 준비위원회 (FOC)',
+            category: 'photo',
+            date: '2024-05-23',
+            source: 'Hillstone',
+            summary: '',
+            link: '',
+            image: 'https://i.imgur.com/q1zKAno.jpeg',
+            images: ["https://i.imgur.com/q1zKAno.jpeg"]
+        },
+        {
+            id: 'mhypw8mx1t33wa9wrkx',
+            title: 'Web3.0 행사 협업 with Gate.IO',
+            category: 'photo',
+            date: '2023-11-14',
+            source: 'Hillstone',
+            summary: '',
+            link: '',
+            image: 'https://i.imgur.com/x13PLu7.png',
+            images: ["https://i.imgur.com/x13PLu7.png"]
+        },
+        {
+            id: 'mhypx74zh76dqr7ngdv',
+            title: 'Web3 Seoul Assemble (LBank & Hillstone)',
+            category: 'photo',
+            date: '2023-09-06',
+            source: 'Hillstone',
+            summary: '',
+            link: '',
+            image: 'https://i.imgur.com/rRS0AsF.jpeg',
+            images: ["https://i.imgur.com/rRS0AsF.jpeg"]
+        },
+        {
+            id: 'mhypy6w2a7qol3wpc4v',
+            title: '국립자연사박물관 건립위원회, 화석과 희귀 광물 NFT 실증실험',
+            category: 'article',
+            date: '2024-10-24',
+            source: '내외경제TV',
+            summary: '힐스톤 파트너스 황라열 대표는 \"감정가가 정해져 있는 유물들은 NFT에 최적화되어 있으며, 몇 천만 원에서 몇 백억 원까지의 보유 유물들을 순차적으로 NFT화하여 지금까지 존재하지 않았던 새로운 시장을 만들어 나갈 것이다\"라고 전했다.',
+            link: 'https://www.nbntv.co.kr/news/articleView.html?idxno=3027027',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhypzcgu6yiwlov7uhc',
+            title: '힐스톤 파트너스, OpenX 자금조달 라운드 투자 유치 완료',
+            category: 'article',
+            date: '2023-10-23',
+            source: '새전북신문',
+            summary: '황라열 힐스톤 파트너스 대표는 \"가장 진화된 방식의 Defi 프로젝트의 한국 리드 투자자로 참여하게 되어 영광이며, 이후 글로벌 투자 라운드에서도 많은 전세계 기관들이 함께 Web3 생태계를 만들어 나갈 수 있는 기회가 되기를 기대한다\"고 전했다.',
+            link: 'http://sjbnews.com/news/news.php?number=795022',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyrizf9g9za5gq2br',
+            title: '솔브케어, 힐스톤 파트너스와 IFEZ 블록체인특구에서의 헬스케어 프로젝트를 위한 MOU 체결',
+            category: 'article',
+            date: '2023-06-30',
+            source: '대한경제',
+            summary: '힐스톤 파트너스는 한국 블록체인 시장에 대한 깊은 이해와 전문성을, 솔브케어는 분산 헬스케어 솔루션 분야에서 블록체인을 활용한 강점을 가지고 있다.',
+            link: 'https://www.dnews.co.kr/uhtml/view.jsp?idxno=202306301124396190471',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhysx3ic7ju0n250bnn',
+            title: '코리아씨이오서밋, \'제19회 월드블록체인웹3.0 마블스\' 컨퍼런스 대성황 이뤄!',
+            category: 'article',
+            date: '2023-06-13',
+            source: '로봇신문',
+            summary: '제5세션에서는 \'부의 이동 : 웹3.0 및 디지털 자산의 시대\' 라는 주제로 황라열 힐스톤파트너스 대표가 기조연설자로 무대에 올랐다.',
+            link: 'https://www.irobotnews.com/news/articleView.html?idxno=31859',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhysy1a102gxv6s4g08h',
+            title: '포스텍 블록체인·디지털자산 전문가 4기 과정 수료식 개최',
+            category: 'article',
+            date: '2023-05-31',
+            source: '아이티비즈',
+            summary: '이정엽 블록체인법학회장을 비롯해 △김종협 파라메타 대표 △우종수 포스텍 CCBR 센터장 △황라열 힐스톤파트너스 대표 △박재현 람다 256 대표 △장민 빌리빗 대표 △이찬기 언오픈드 대표 △백승광 블록와이스레이팅스 대표 △조현진 젤리스페이스 대표 △연창학 블록오디세이 파운더 △김도형 이스크라 CTO △박열 크립토퀀트 애널리스트 등이 참여하였다.',
+            link: 'https://www.it-b.co.kr/news/articleView.html?idxno=68331',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhysyw4parfa055snra',
+            title: '코리아씨이오서밋, 호치민서 \'블록체인웹3.0 마블스\' 컨퍼런스 개최',
+            category: 'article',
+            date: '2023-05-30',
+            source: '이뉴스투데이',
+            summary: '\'부의 이동 : 웹3.0 및 디지털 자산의 시대\' 라는 주제로 황라열 힐스톤파트너스 대표가 기조연설자로 무대에 오른다.',
+            link: 'https://www.enewstoday.co.kr/news/articleView.html?idxno=2005216',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyy5j1b1ehx15kuri3',
             title: '포블, 유망한 프로젝트 발굴과 네트워킹 활성화 이끈다',
             category: 'article',
             date: '2023-05-23',
@@ -63,7 +228,7 @@ function getSampleData() {
             images: []
         },
         {
-            id: 'mhzsulx5yrggjfv0d6',
+            id: 'mhyy6m8n70x30um05z3',
             title: '도시문화융합컨퍼런스, CICON 호치민 2023, 다음달 6~8일 호치민시에서 개최... 스마트시티를 논한다.',
             category: 'article',
             date: '2023-05-09',
@@ -74,7 +239,7 @@ function getSampleData() {
             images: []
         },
         {
-            id: 'mhzsulx5hykwpydv59',
+            id: 'mhyy8bb9t65d84xcc1q',
             title: '\'크립토 성지\' DMCC 회장 \"기술력 갖춘 韓 기업, 두바이로 오라\"',
             category: 'article',
             date: '2023-03-15',
@@ -85,7 +250,7 @@ function getSampleData() {
             images: []
         },
         {
-            id: 'mhzsulx5uktqrts1has',
+            id: 'mhyy946uw7okk8v89mh',
             title: '코리아씨이오서밋, 블록체인 컨퍼런스서 웹3.0 생태계 논의',
             category: 'article',
             date: '2023-02-27',
@@ -96,13 +261,893 @@ function getSampleData() {
             images: []
         },
         {
-            id: 'mhzsulx5fnmpms3n4bf',
+            id: 'mhyya91oc2m56swvsjb',
             title: '황라열 힐스톤파트너스 대표, 코리아씨이오서밋(KCS) 선정 \"한국의 빛, 융합경영대상\" 수상',
             category: 'article',
             date: '2023-02-26',
             source: '파이낸스투데이',
             summary: '황라열 힐스톤파트너스 대표가 지난 23일 \'웹3.0이 도시, 문화, 융합을 담다\'를 주제로 열린 코리아씨이오서밋 창립 20주년 기념 \'MARVELS & CICON 2023\' 에서 \'한국의 빛, 융합경영대상\'을 수상했다.',
             link: 'https://www.fntoday.co.kr/news/articleView.html?idxno=287938',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyyb9wg1ys5m16fg13',
+            title: '포스텍 블록체인 전문가 과정 4기 수강생 모집… 최정예 강사진 총출동',
+            category: 'article',
+            date: '2023-01-17',
+            source: '잡포스트',
+            summary: '강의는 △이정엽 블록체인법학회 회장 △김종협 아이콘루프 대표 △우종수 포스텍 CCBR 센터장 △황라열 힐스톤파트너스 대표 △박재현 람다 256 대표 △장민 빌리빗 대표 △이찬기 언오픈드 대표 △백승광 블록와이스레이팅스 대표 △조현진 젤리스페이스 대표 △연창학 블록오디세이 파운더 △김도형 이스크라 CTO △주기영 크립토퀀트 대표 순이다.',
+            link: 'https://www.job-post.co.kr/news/articleView.html?idxno=67798',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyyc4d2b99wlwr1k95',
+            title: '\"(사)한국블록체인연합회\"와 \"디지털자산기업평가위원회\" 공식 출범',
+            category: 'article',
+            date: '2023-01-02',
+            source: '국제뉴스',
+            summary: '이를 위하여 투자기관으로는 힐스톤파트너스(황라열 대표이사)와 에스 아이디 파트너스(권대웅 대표이사)가 기술검증기관으로는 한국가상자산평가인증원(대표 정학수)이 함께하기로 했다.',
+            link: 'https://www.gukjenews.com/news/articleView.html?idxno=2627680',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyyd0c3p9pzyaybyuo',
+            title: '코리아씨이오서밋, \'월드블록체인서밋 마블스 호치민\' 성료',
+            category: 'article',
+            date: '2022-12-27',
+            source: '이뉴스투데이',
+            summary: '제2세션에서는 황라열 힐스톤파트너스 대표이사가 \'부의 이동, 디지털 자산의 시대\' 라는 주제로 기조연설을 했다. 황라열 대표는 기조연설에서 \"베트남이 아시아 디지털 자산의 중심이 될 가능성이 굉장이 높다고 생각한다. 디지털 자산에 있어 국경은 의미가 없다. 디지털 자산 1세대로서, 베트남이 새로운 디지털 자산의 허브가 되기를 희망한다.\"고 말했다.',
+            link: 'https://www.enewstoday.co.kr/news/articleView.html?idxno=1626260',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyydzma8f37ei69pnl',
+            title: '한°베 수교 30년 이후 최고의 포럼, \"도시문화융합컨퍼런스, 씨콘하노이 2022\" 성황리 개최',
+            category: 'article',
+            date: '2022-12-26',
+            source: '파이낸스투데이',
+            summary: '\'블록체인: 웹3.0 시대의 시작\'이란 주제로 토론회가 열렸다. 박성준 동국대학교 블록체인연구센터 센터장 겸 앤드어스 대표가 좌장을 맡고, 황라열 힐스톤파트너스 대표이사, 레 뚜엣 마이(Lê Tuyết Mai) 베트남블록체인연합(VBU) 부회장(전 빈그룹 CMO), 황 응옥 자 롱(Hoàng Ngọc Gia Long) VBU 수석부회장, KW Vietnam 회장, 백종윤 맘모스재단 의장 등 젊은 기업인들이 토론자로 참여하여 큰 호응과 함께 박수갈채를 받았다.',
+            link: 'https://www.fntoday.co.kr/news/articleView.html?idxno=285008',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyyf1jzvyxvnajefj',
+            title: '투자자에게 얼마가 필요하다고 당당히 말하라 [김형중 분산금융 톺아보기]',
+            category: 'article',
+            date: '2022-11-26',
+            source: '이코노미스트',
+            summary: '창업자들에게 가장 도움이 된 건 프리젠테이션과 스피치 교육이었다고 한다. 필자에게 가장 피부에 와 닿았던 것 역시 투자자에게 프리젠테이션하는 방법에 대한 교육이었다. 그날 강사는 힐스톤 파트너스의 황라열 대표였다. 요지는 아주 간단했다. 투자자에게 돈이 얼마 필요하고 그걸로 무엇을 해서 언제까지 이익을 얼마 돌려 주겠다고 발표하라는 거였다.',
+            link: 'https://economist.co.kr/article/view/ecn202211260027',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyyh982pr7u0zo7gx',
+            title: '\'2022 웨강아오 대만구 글로벌 투자 콘퍼런스 한국\' 성료',
+            category: 'article',
+            date: '2022-11-17',
+            source: '데일리경제',
+            summary: '또한 광동성에 투자한 한국 기업 ESE 이창호 부사장의 성공 경험과 힐스톤파트너스의 황라열 대표의 중국의 투자 기회 및 크로스 보드 M&A 시장에 대한 주제 발표가 이어졌다.',
+            link: 'http://www.kdpress.co.kr/news/articleView.html?idxno=116410',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyyi4mlpsyoo3urkei',
+            title: '힐스톤파트너스, 글로벌 투자사로부터 연이어 투자 유치',
+            category: 'article',
+            date: '2022-11-14',
+            source: 'NBN뉴스',
+            summary: '황라열 힐스톤파트너스 대표는 \"이번 투자는 단순 자금 투자가 아니라 공동 생태계 구축이라는 의미가 있다\"며 \"웹 3.0을 기반으로 전통 영역과 블록체인 영역의 금융 생태계를 이어나가는 브릿지 역할을 선도해 나갈 것\"이라고 말했다.',
+            link: 'https://www.nbnews.kr/news/articleView.html?idxno=64702',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyyjqh04mtroisgi84',
+            title: '상상하라, 메타버스! ‘메타버스×NFT 인사이트2022’ 9월 20일 팡파르',
+            category: 'article',
+            date: '2022-08-30',
+            source: '게임톡',
+            summary: '전 아산나눔재단 스타트업센터장이었던 수이제네리스 김형진 파트너, 슈로더코리아 프라이빗에셋 본부장이었던 카익투벤처스 윤희경 대표, 가상자산 투자에서 큰 두각을 보이고 있는 힐스톤 황라열 대표 등이 참석한다.',
+            link: 'https://www.gametoc.co.kr/news/articleView.html?idxno=68037',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyyl5b7rwgppugeedm',
+            title: 'NFT META Busan 2022 & MARVELS Awards 25일 부산에서 개최',
+            category: 'article',
+            date: '2022-08-23',
+            source: '파이낸스투데이',
+            summary: '제5세션은 ‘디지털 시대의 새로운 자산’이란 주제로 박혜진 바이야드 대표가 좌장을 맡는다. 황라열 힐스톤파트너스 대표가 ‘부의 이동, 디지털 자산의 시대’라는 주제로 발표하고, 최근 한국 NFT계의 각광을 받고 있는 조현진 젤리스페이스 대표가 ‘NFT, 가상의 가치를 구현하다’라는 주제로 무대에 오른다.',
+            link: 'https://www.fntoday.co.kr/news/articleView.html?idxno=278962',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyylyu65ha3iqyytcu',
+            title: '엘뱅크 \'LBANK\' 거래소, 힐스톤 파트너스와 MOU 체결…\"블록체인 비즈니스 협력',
+            category: 'article',
+            date: '2022-08-08',
+            source: '데일리안',
+            summary: '황라열 힐스톤 파트너스 대표는 “블록체인 프로젝트들에게 힐스톤 파트너스의 전문 인큐베이팅과 펀드레이징, 엘뱅크의 해외 커뮤니티 지원과 상장 솔루션 제공을 통해 보다 더 비즈니스의 본질에 집중할 수 있는 환경을 제공할 수 있기를 기대한다\"고 밝혔다.',
+            link: 'https://www.dailian.co.kr/news/view/1140537/?sc=Naver',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyymwr0lemyyhcq5z',
+            title: '가상자산 거래 플랫폼 DOEX, 힐스톤 파트너스와 전략적 제휴',
+            category: 'article',
+            date: '2022-08-05',
+            source: '데일리안',
+            summary: '힐스톤 파트너스는 금융 기술, 빅데이터, 블록체인 기업의 해외 금융 및 IT분야의 높은 전문성과 풍부한 자원을 바탕으로 사모펀드와 대체 상품에 대한 투자를 진행하고 있다. 힐스톤 파트너스가 운영하는 힐스톤 파이낸스는 스마트 계약을 기반으로 하는 자산 유동성 플랫폼이다. 이 플랫폼을 통해 사용자들에게 다양하고 편리한 투자와 자금 조달 경로를 제공하는 것을 목표로 하고 있다.',
+            link: 'https://www.dailian.co.kr/news/view/1139991/?sc=Naver',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyyu0qr9ag1v72b3r',
+            title: '윤창현 \"암호화폐를 제3의 자산으로···디지털자산기본법 속도 낼 것\"',
+            category: 'article',
+            date: '2022-07-07',
+            source: '디센터',
+            summary: '이어진 발표에서 황 대표는 NFT와 메타버스의 등장과 함께 변화한 새로운 금융 패러다임에 주목했다. 황 대표는 “NFT와 메타버스는 블록체인, 암호화폐와 뗄 수 없는 관계인데 암호화폐에 보수적이었던 정부가 NFT와 메타버스가 암호화폐와 관련이 없다고 생각하면서 각종 서비스에 도입하려 하고 있다”며 “기존 가치관을 고수하며 NFT와 메타버스 주 이용자층의 가치관에 맞추지 않으면 의미 없는 일”이라고 지적했다.',
+            link: 'https://decenter.kr/NewsView/268FHQQ8N6',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyyxazdzsa4cfqq2gm',
+            title: '루나 이후 웹3.0은 어디로 가나…오늘 대토론회',
+            category: 'article',
+            date: '2022-07-07',
+            source: '이데일리',
+            summary: '2세션에는 ‘웹3.0 시대 : NFT에서 메타버스까지’라는 주제로 한장겸 샌드박스 부사장과 디지털 자산 전문 투자회사 창업자인 황라열 힐스톤파트너스 대표가 기조연설자로 나선다.',
+            link: 'https://www.edaily.co.kr/News/Read?newsId=01223446632392224&mediaCodeNo=257&OutLnkChk=Y',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhyyy4u06pny5x4q847',
+            title: '홀덤 프랜차이즈 KMGM, NFT 도입·건강한 홀덤 생태계 구축 나선다',
+            category: 'article',
+            date: '2022-05-24',
+            source: '스포츠동아',
+            summary: '힐스톤 파트너스 황라열 대표는 “단순한 디지털 미술품 혹은 수집품으로 인식되고 있는 NFT의 활용 가능성이 다양한 방식으로도 확장될 수 있다는 것을 직접 보여주고 싶은 생각에 참여하게 됐다”고 설명했다.',
+            link: 'https://sports.donga.com/article/all/20220524/113584379/2',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz1rzxkn5bdkn4c95',
+            title: '장근석, 10년 전 모습 NFT로...화보 8종 포함 199개 무료 발행',
+            category: 'article',
+            date: '2022-05-18',
+            source: 'OSEN',
+            summary: '힐스톤 파트너스(대표 황라열)는 \"NFT의 활용에 있어 기술적으로 새롭고 진보한 모델들을 선보일 예정\"이라고 전했다.',
+            link: 'https://www.osen.co.kr/article/G1111845667',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz1t1hd3y0ep7cf60v',
+            title: '한국핀테크연합회·힐스톤파트너스, 26일 \'대한민국 메타버스 대전망 콘퍼런스\' 개최',
+            category: 'article',
+            date: '2022-04-20',
+            source: '전자신문',
+            summary: '핀테크연합회는 힐스톤파트너스와 함께 오는 26일 광화문 프레스센터 19층에서 대한민국 메타버스 대전망 콘퍼런스를 개최한다. 두 기관은 이번 행사를 통해 익히 알려지지 않은 메타버스의 본질, 메타버스가 재차 주목받는 이유에 대해 소개한다. 온라인 3D 가상세계 플랫폼 및 메타버스의 원조, 그간 역사 역시 상세히 전달한다.',
+            link: 'https://www.etnews.com/20220420000169',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz1tsbs28yt3ezf9p6',
+            title: '한국NFT콘텐츠협회, 한국 최초 \'NFT 투자 IR쇼\' 성황리 폐막',
+            category: 'article',
+            date: '2022-04-15',
+            source: '게임톡',
+            summary: '이날 행사에는 ▲위메이드, ▲핀업파트너스, ▲힐스톤파트너스, ▲푸른인베스트먼트, ▲엠오벤처스, ▲타임웍스인베스트먼트, ▲DAB, ▲아이피샵(IPXHOP) 등 국내 유수의 기관투자사가 참가했다.',
+            link: 'https://www.gametoc.co.kr/news/articleView.html?idxno=65878',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz1um84hqnmmlsi017',
+            title: '힐스톤 파트너스, \'런치 다오\' 정식 론칭 \"워런 버핏랑 식사해요\"',
+            category: 'article',
+            date: '2022-04-07',
+            source: '게임톡',
+            summary: '황라열 힐스톤 파트너스 대표는“DAO의 방식은 기존의 틀을 벗어난 창의적인 시도를 가능하게 한다. 이런 DAO의 본질적 가치가 사회에 어떠한 긍정적 기여를 하는지에 대해 꼭 실험해보고 싶다”라고 전했다.',
+            link: 'https://www.gametoc.co.kr/news/articleView.html?idxno=65726',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz1vdu4zh7k8ta43l',
+            title: '힐스톤 파트너스, UAE RSP와 공동투자 조인트 벤처 설립 업무협약 체결',
+            category: 'article',
+            date: '2022-04-06',
+            source: '시사매거진',
+            summary: '황라열 힐스톤파트너스 대표는 “이번 펀드 조성을 통해 보유하고 있는 중국 및 해외 펀드 네트워크들을 활용, 전 세계 최고의 NFT-메타버스 전문 펀드로의 역할을 할 수 있도록 노력하겠다”고 전했다.',
+            link: 'https://www.sisamagazine.co.kr/news/articleView.html?idxno=438277',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz1xzhm8dwamx6h31s',
+            title: '트리플엔랩-힐스톤 파트너스, 셀럽 NFT 시장 진출 맞손',
+            category: 'article',
+            date: '2022-03-25',
+            source: '뉴스1',
+            summary: '황라열 힐스톤 파트너스 대표이사는 \"NFT가 전 세계적으로 핫하다 보니 너무 성급하게 시장에 뛰어들어 실패하는 사례들이 간혹 있다\"며 \"트리플엔랩이 가진 장점과 우리가 가진 기술력이 해외 파트너들에게 활용된다면 좋은 NFT 사례를 만들어 낼 수 있겠다는 확신이 들었다\"며 업무 협약 계기를 설명했다.',
+            link: 'https://www.news1.kr/industry/sb-founded/4627810',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz20xtndg3yyfynp4k',
+            title: '힐스톤 파트너스, FDS 기술 회사 나무플래닛 preA 투자',
+            category: 'article',
+            date: '2022-03-18',
+            source: '뉴스1',
+            summary: '힐스톤 파트너스의 황라열 대표는 “디지털 자산 영역이 확대되면서 빅데이터 기반의 금융 솔루션들의 필요성이 높아지고 있다. 이미 FDS 솔루션을 통해 뛰어난 기술력을 검증받은 나무플래닛은 향후 글로벌 및 가상자산거래소들로의 사업 확대가 예상되고, 힐스톤에서 진행하고 있는 디지털 자산 사업에도 큰 도움이 될 것으로 기대한다”고 말했다.',
+            link: 'https://www.news1.kr/industry/sb-founded/4620145',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz21qqyfgknkfd6sm',
+            title: 'SDX재단, 힐스톤파트너스와 탈중앙화 환경단체 \'Carbon DAO\' 구축',
+            category: 'article',
+            date: '2022-03-17',
+            source: '서울경제TV',
+            summary: '황라열 힐스톤파트너스의 대표는 “전세계 기후, 환경에 대한 자발적 커뮤니티 활동은 탈중앙화 단체인 DAO가 적극적 참여와 실천을 기반으로 자발적 탄소감축 행동을 가장 효과적으로 활용할 수 있는 적합한 생태계”라며 “그간 SDX 재단이 해왔던 수많은 활동들과 가치를 보다 글로벌하게 확장시키는데 도움을 주고자 프로젝트에 합류했다”고 말했다.',
+            link: 'https://www.sentv.co.kr/article/view/sentv202203170004',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz22kmw0e4mafhdu64e',
+            title: '힐스톤 파트너스, GPU 클라우드 플랫폼 딥브레인체인(DBC) 프로젝트 투자',
+            category: 'article',
+            date: '2022-03-10',
+            source: '아시아경제',
+            summary: '힐스톤 파트너스의 황라열 대표는 “최근 들어 메타버스, AI, 클라우드 게임, 블록체인 등의 서비스에 필요한 고성능 컴퓨팅 리소스의 시장 니즈가 크게 생겨났다. 관련 기업 및 개발자들이 손쉽게 GPU 리소스를 임대하여 사용할 수 있는 GPU 클라우드 컴퓨팅 파워 솔루션의 국내 인프라 구축을 위해 투자를 집행했다”고 전했다.',
+            link: 'https://view.asiae.co.kr/article/2022031012174315508',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz23d8jdp1vx487984',
+            title: '힐스톤 파트너스, 대만 루루마켓(LULU Market) 프로젝트에 투자 밝혀',
+            category: 'article',
+            date: '2022-02-28',
+            source: '파이낸셜포스트',
+            summary: '황라열 힐스톤 파트너스 대표는 “루루마켓 프로젝트를 한국에 소개하는 과정에서  기존 고정관념으로는 이해할 수 없는 게임 아이템, 가상 부동산 등의로의 투자 개념이 한국에도 빠르게 자리잡게 될 것으로 기대한다”고 전했다.',
+            link: 'http://www.fintechpost.co.kr/news/articleView.html?idxno=154026',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz253fv6ieyigf3wa6',
+            title: '한국NFT콘텐츠협회 창립총회 개최',
+            category: 'article',
+            date: '2022-01-21',
+            source: '로이슈',
+            summary: '한국NFT콘텐츠협회, 다안다그룹, 모네타자산운용, 힐스톤파트너스, 핀업 파트너스, 푸른인베스트먼트, 엠오벤처스가 중심이 되어 한국 NFT 펀드조성 및 업무협약식을 진행했다.',
+            link: 'https://www.lawissue.co.kr/view.php?ud=2022012118071771229817d053b9_12',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz25pnastjzq6cnrv8',
+            title: '경기도경제과학진흥원, 힐스톤파트너스 업무협약 체결',
+            category: 'article',
+            date: '2022-01-12',
+            source: '브릿지경제',
+            summary: '황라열 힐스톤 대표는 “경과원이 보유한 벤처기업의 정보를 제공 받아 시간과 비용 부담을 줄이는 등 보다 효율적으로 경기도 내 기업의 외국진출 방안을 모색할 수 있을 것으로 기대된다”라고 말했다.',
+            link: 'https://www.viva100.com/20220112010003167',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz26ha7xkpnti7wns',
+            title: '경상국립대학교, 힐스톤 파트너스 투자 협약체결',
+            category: 'article',
+            date: '2022-01-06',
+            source: '파이낸셜포스트',
+            summary: '황라열 힐스톤 파트너스 대표는 “기존의 스타트업들은 물론, 의과 대학을 기반으로 다소 규모가 큰 기술 기업들에 대한 투자를 글로벌 크립토 펀드들과 연계하여, 충분한 자금 지원을 통해 기업의 이득과 성장이 지속되어질 수 있도록 도울 예정이다. 언어나 문화적 차이가 크게 작용하지 않는 의학분야 기술 기업의 경우 바로 글로벌 투자로 연결될 수 있어 이와 같은 시도에 더욱 적합하다” 고 밝혔다.',
+            link: 'http://www.fintechpost.co.kr/news/articleView.html?idxno=151507',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz27eavynbi7i1c13e',
+            title: '탈중앙 금융 서비스 힐스톤 파이낸스, 메타버스-NFT 전용 펀드 조성 밝혀',
+            category: 'article',
+            date: '2021-12-16',
+            source: '파이낸셜포스트',
+            summary: '황라열 힐스톤 파트너스 대표는 “T2T(토큰 투 토큰)로 폐쇄형 펀드(Close-end)의 모금 방식과 DAO 형태의 운영을 통해 현재의 금융 규제들을 극복하고, 투자 자산의 확장에 있어 혁신적인 패러다임을 만들어가는 세계 최고의 메타버스 자산 운용사를 목표로 하고 있다”고 전했다.',
+            link: 'http://www.fintechpost.co.kr/news/articleView.html?idxno=150488',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz289tlojrpz2fuyw',
+            title: '힐스톤파트너스, 포에버랜드 통한 \'웹 3.0 호스팅\' 무료 서비스',
+            category: 'article',
+            date: '2021-12-10',
+            source: '파이낸셜포스트',
+            summary: '힐스톤파트너스(대표 황라열)은 9일 웹(Web) 3.0 개발사 포에버랜드(4 EVERLAND)의 한국 운영에 대한 독점 계약을 맺고 블록체인 기반 호스팅 서비스를 시작한다고 밝혔다. 회사는 지난달 30일 독점 계약을 맺은 바 있다. 이에 따라 힐스톤파트너스는 향후 국내 스타트업 및 소규모 개발 회사, 프로젝트 등에 웹 3.0을 기반으로 한 무료 웹호스팅을 제공할 계획이다.',
+            link: 'http://www.fintechpost.co.kr/news/articleView.html?idxno=150239',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz28w5n86fan9rydnh',
+            title: '제주창조경제혁신센터 \'보육기업 공통교육\' 진행',
+            category: 'article',
+            date: '2021-12-06',
+            source: '제주의소리',
+            summary: '창업컨설팅 전문 기업 스타트런, 블록체인‧암호화폐 분야를 대상으로 투자하는 글로벌 펀드회사 힐스톤 파트너스, 게임 소프트웨어 개발 기업 슬릭코퍼레이션 등 분야별 전문가가 참여했다.',
+            link: 'https://www.jejusori.net/news/articleView.html?idxno=336224',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz29ubeh82jrf2m46f',
+            title: '부산머니쇼, 디지털금융 스타트업 위한 투자 IR쇼 개최',
+            category: 'article',
+            date: '2021-11-10',
+            source: '뉴스워커',
+            summary: '이번 부산머니쇼에서는 부대행사로 핀테크·블록체인 스타트업들을 위한 투자IR쇼(설명회)가 마련된 바 있다. 특히 투자IR쇼에 모네타자산운용, 힐스톤파트너스 등 10여 개 벤처캐피탈(VC)들이 참여해 투자사별 펀드 성격과 투자계획에 대해 설명하기도 했다.',
+            link: 'https://www.newsworker.co.kr/news/articleView.html?idxno=135973',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2aiqjusnroil0s6',
+            title: '한국NFT콘텐츠협회, 2021 부산머니쇼서 출범식 개최',
+            category: 'article',
+            date: '2021-11-09',
+            source: '이데일리',
+            summary: '이날 출범식에는 배운철 STARS그룹 사장, 김형주 한국블록체인산업진흥협회 이사장, 나정식 한국블록체인조정협회 회장, 고기영 전 법무부차관(법무법인 여백), 원형식 초록뱀미디어 회장, 추연우 모네타자산운용 대표, 한성수 다안다그룹 회장, 황라열 힐스톤파트너스 대표, 김종빈 골든골 대표 등 블록체인업계와 엔터테인먼트 및 콘텐츠업계, 투자사 관계자들이 대거 참석한 가운데 열렸다.',
+            link: 'https://www.edaily.co.kr/News/Read?newsId=02640406629244080&mediaCodeNo=257&OutLnkChk=Y',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2b13wlmclkwyh3ji',
+            title: '한국핀테크연합회-한국IT교육원, 20일 부산 센탑에서 고블록 해커톤·데모데이 본선전 개최',
+            category: 'article',
+            date: '2021-08-03',
+            source: '전자신문',
+            summary: '부산 센탑을 대표하는 블록체인 전문기업 10개 이상 기업과 만나는 네트워크 교류행사를 갖는다. 매칭업에는 퓨쳐센스, 힐스톤파트너스, 비스퀘어 등이 참여할 예정이다.',
+            link: 'https://www.etnews.com/20210803000027',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2bp6m0qtp9kaxa3w',
+            title: '힐스톤 파트너스, BigBlueOcean Group과 메인 LP 계약',
+            category: 'article',
+            date: '2021-06-28',
+            source: '한국경제TV',
+            summary: '힐스톤 파트너스의 황라열 대표이사는 \"곧 발표할 예정인 힐스톤 투자 플랫폼의 대표 파트너 LP로 글로벌 네트워크가 단단한 BigBlueOCean Group이 합류하게 되었다. 이를 통해 전통 금융과 블록체인 기술이 어떻게 결합될 수 있는지에 대한 명확한 사례를 보여드리겠다.\"고 전했다.',
+            link: 'https://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202106280203&t=NN',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2ca33lol6tao89i',
+            title: 'IRO, 힐스톤 파트너스, 스타트업 대면 심사 플랫폼 론칭',
+            category: 'article',
+            date: '2021-06-17',
+            source: '한국경제TV',
+            summary: '힐스톤 파트너스의 황라열 대표는 \"IRO는 글로벌을 지향하는 스타트업들에게 가장 적합한 서비스를 제공할 수 있다. 향후 플랫폼 운영을 통해 세계 유수의 투자자들과 한국의 훌륭한 스타트업들을 연결하는 역할을 IRO가 충분히 해낼 것이라고 확신하여 파트너쉽을 맺게 되었다\" 고 전했다.',
+            link: 'https://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202106170314&t=NN',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2culzz9ygm15viii',
+            title: '젤리스페이스, 크립토펀드 운용사 \'힐스톤파트너스\'와 업무협약 체결',
+            category: 'article',
+            date: '2021-06-08',
+            source: '서울경제TV',
+            summary: '힐스톤파트너스에 대한 관심은 해외에서 더 높다. 2019년 글로벌 스타트업 액셀러레이터 테크스타(techstars)와 파트너십 계약을 체결하고, 판교 스타트업 캠퍼스에서 국내외 유수의 기관들과 함께 스타트업 액셀러레이팅 프로그램을 운영 중에 있다. 또 배달의민족을 인수한 딜리버리히어로의 모기업인 로켓인터넷(ROCKETINTERNET)과는 2018년 글로벌 크립토 펀드 조성에 대한 전략적 업무 협약을 체결한 바 있다.',
+            link: 'https://www.sentv.co.kr/article/view/sentv202106080037',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2dk4w2ajkce0j2t7',
+            title: '핀테크연합회, \'블록체인 기반 기술거래소\' 운영 나선다',
+            category: 'article',
+            date: '2020-02-28',
+            source: '파이낸셜뉴스',
+            summary: '한국핀테크연합회, 나무플래닛, 다이브는 이번 협약을 통해 블록체인 기반 혁신기술 거래소 개발 및 구축을 담당한다. 힐스톤 파트너스는 핀테크연합회와 함께 벤처 자문 및 \'혁신기술 배심원\' 운영 등 전반적인 시범사업 운용을 맡을 예정이다.',
+            link: 'https://www.fnnews.com/news/202002281424548096',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2ecelv7c9nuizdcs',
+            title: '글로벌 AC 전진기지된 \'실리콘 판교\'...테크스타스 등 둥지',
+            category: 'article',
+            date: '2019-12-18',
+            source: '전자신문',
+            summary: '이들 글로벌 AC의 한국 운영 지원은 힐스톤파트너스가 맡는다. 이재명 경기도지사는 “대한민국 스타트업 생태계 발전을 위해 첫걸음을 함께해 준 모든 분께 감사드린다”면서 “경기도는 앞으로도 미래 산업 발전을 위해 스타트업과 글로벌 액셀러레이터를 위한 지원을 아끼지 않겠다”고 밝혔다.',
+            link: 'https://www.etnews.com/20191218000248',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2f3s38nr0ok8qgzx',
+            title: '\"UN조달시장 진출 기업 육성\" 힐스톤비즈니스센터-STS&P조직위 \'맞손\'',
+            category: 'article',
+            date: '2019-11-28',
+            source: '프라임경제',
+            summary: '양사의 이번 제휴는 힐스톤비즈니스센터의 스타트업 프로그램에 대한 육성과 투자 협력을 위한 것으로, 약 20조원에 달하는 유엔조달시장 및 약 5500조원 BoP(Bottom of Pyramid)시장으로 국내 기업들을 진출시키는 교두보 역할을 하게 될 전망이다.',
+            link: 'https://www.newsprime.co.kr/news/article/?no=485093',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2fwc1dgu4ulgk3j',
+            title: '힐스톤 글로벌, 클라우드 마이닝 플랫폼 우비트와 파트너십 체결',
+            category: 'article',
+            date: '2019-11-14',
+            source: '와이드경제',
+            summary: '황라열 힐스톤 파트너스 대표는 “검증된 클라우드 마이닝 업체를 찾는데 굉장한 어려움을 겪었다”며 “이번 협업을 통해 우비트와 암호자산 관리 사업 구축을 함께하게 되어 큰 힘이 되었다”고 소감을 말했다.',
+            link: 'https://www.widedaily.com/news/articleView.html?idxno=148842',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2gjwi0u6cl9h3rx6b',
+            title: '월튼블록체인연구교육원, 취창업 연계 블록체인 개발자 양성과정 수료식 개최',
+            category: 'article',
+            date: '2019-10-24',
+            source: '전자신문',
+            summary: '수료식에 앞서 11일에는 인턴십 연계를 위한 매칭데이가 서초구청 대강당에서 진행됐다. 글로스퍼, 노매드커넥션, 힐스톤파트너스 등 9개 기업이 참여해 기업 소개 시간을 가진 뒤 수강생을 대상으로 면접이 진행됐다.',
+            link: 'https://www.etnews.com/20191024000021',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2hs15pai3hnjk9c',
+            title: '‘제 2회 벤처 스타트업 캐스팅 페어’ 성공적으로 마쳐',
+            category: 'article',
+            date: '2019-08-29',
+            source: '와이드경제',
+            summary: '행사에 참석한 황라열 힐스톤 파트너스 대표는 “보안, 게임, 크리에이터, 부동산 공동 투자, 스테이블코인, 신용평가 등 요즘 각광받는 다양한 분야의 유망 프로젝트를 한번에 만난 매우 유익한 행사였다” 며, “특별히 관심 가는 프로젝트와는 추가 협의를 진행 예정”이라고 말했다.',
+            link: 'https://www.widedaily.com/news/articleView.html?idxno=134111',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2ioex0yi8ksjqu4hl',
+            title: '[창간 5주년 기획/한국경제, 글로벌경쟁력 점검④ 블록체인] 명확한 방향성 절실...투기 수단 전락 막아야',
+            category: 'article',
+            date: '2019-08-26',
+            source: '한국경제신문',
+            summary: '황대표는 “미들맨을 없앨 것이 아니라 오히려 얼마나 더 미들맨들을 잘 활용하고 또 미들맨들에게 모티베이션을 주어 비즈니스를 활성화시킬 것인가, 비효율적이거나 비도덕한 미들맨들의 운용에 대해 어떤 식으로 개선할지에 대해 고민을 해야 하는 것이 사실은 더 중요하다.”고 말한다.',
+            link: 'https://www.getnews.co.kr/news/articleView.html?idxno=149101글로벌경제신문',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2jdtpqpee41ku1vr',
+            title: '블록체인 스타트업 초기투자 활발...견실한 성장 발판',
+            category: 'article',
+            date: '2019-07-30',
+            source: '파이낸셜뉴스',
+            summary: '황라열 힐스톤파트너스 대표는 “현재 블록체인 스타트업이 직면한 가장 큰 애로사항은 초기자금 조달이 어렵다는 것”이라며 “암호화폐 상장 후 거래소를 통해 돈을 회수하는 크립토펀드와 블록체인 기업을 꺼리는 전통VC 사이에서 블록체인 스타트업에 대한 초기투자는 지금껏 공백상태에 가까웠다”고 설명했다.',
+            link: 'https://www.fnnews.com/news/201907301428434256',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2k0qpgueir9agkdp',
+            title: '테크스타-힐스톤파트너스 파트너십…\"한국 스타트업 해외진출 지원\"',
+            category: 'article',
+            date: '2019-07-15',
+            source: '이투데이',
+            summary: '힐스톤파트너스 황라열 대표는 “정부 주도로 시장에 돌고 있는 자금은 풍부하지만 실제 필드에선 경험 부족 및 해외 네트워크의 부족으로 스타트업들이 여전히 해외 진출에 어려움을 겪고 있다”며 “보여주기식 프로그램들로 정부 예산, 민간 자원이 낭비되고 있다”고 말했다. 이어 그는 “한국 스타트업의 글로벌 진출을 위해선 국내 지원보다는 해외 시장에 대한 정보를 많이 알고 있는 글로벌 액셀러레이터의 서포팅과 스타트업의 해외 진출에 대한 이해도가 높은 국내 액셀러레이터의 결합이 매우 중요하다”고 말했다.',
+            link: 'https://www.etoday.co.kr/news/view/1776933',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2ksgvrku32f4hz6r',
+            title: '블록체인 서비스 GXchain, 아마존 웹 서비스 리스팅',
+            category: 'article',
+            date: '2019-06-25',
+            source: '글로벌경제신문',
+            summary: '한국 공식 파트너인 힐스톤 파트너스의 황라열 대표는 “GXChain의 아마존 AWS와의 협업은 기술 분야에 있어 블록체인의 확장성을 보여주는 좋은 사례\"라며 \"그만큼 블록체인 기술의 실사용화가 가속돼 가고 있고, 앞으로도 더욱 스케일이 커질 수 있는 큰 가능성을 보여주었다”고 전했다.',
+            link: 'https://www.getnews.co.kr/news/articleView.html?idxno=136569',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2lelzcxbskay7dd',
+            title: '중국 블록체인 업체 지엑스체인(GXChain),비팔(BEPAL) 한국 진출 시동...힐스톤 파트너스 황라열 대표 한국 파트너 협력',
+            category: 'article',
+            date: '2019-05-19',
+            source: '파이낸셜포스트',
+            summary: '힐스톤 파트너스의 황라열 대표는 “현재 중국에서 최고의 기술력과 서비스로 인정받고 있는 두 회사의 한국 파트너로서 성공적인 한국 진출을 위해 최선을 다할 생각이다. 앞으로도 이러한 글로벌 기업들의 협업 및 한국 진출을 통해 블록체인 시장의 규모를 키워나가는데 힐스톤 파트너스가 큰 역할을 할 수 있게 되기를 기대한다”고 말했다.',
+            link: 'http://www.fintechpost.co.kr/news/articleView.html?idxno=36946',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2m10d2fkk475xvan',
+            title: 'Fintech4good, 2019 뉴욕 Security Token 포럼 개최...힐스톤 파트너스 황라열 대표 한국 파트너로 참여',
+            category: 'article',
+            date: '2019-04-04',
+            source: '파이낸셜포스트',
+            summary: '2019 뉴욕 Security Token 포럼(NYSTF 2019)의 한국 파트너로 참여하는 힐스톤 파트너스 황라열 대표는 “한국에서 아직 구체적인 정보가 없이 STO가 진행되려는 움직임이 보인다. STO가 단지 또 다른 펀드레이징의 하나가 될 것인가, 아니면 자본 시장을 변화시킬 수 있는 방식이 될 것인가에 대한 판단을 해야 할 중요한 시점이라고 생각한다. STO가 현재의 법적 규제를 극복하고 혁신을 가능하게 하는 동시에 투자자를 보호하는데 적절한지에 대해 큰 관심을 가지고 있다”고 말했다.',
+            link: 'http://www.fintechpost.co.kr/news/articleView.html?idxno=29780',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2mntz19c1491wzdm',
+            title: '황라열 힐스톤 파트너스 대표, 암호화폐,블록체인 등 디지털 자산에 최초 \'신탁\' 개념 도입...\'커스터디 서비스\'로 새로운 도전',
+            category: 'article',
+            date: '2019-01-20',
+            source: '파이낸셜포스트',
+            summary: '힐스톤 파트너스의 황라열 대표는 “커스터디 서비스는 기술, 금융 영역 모두에서 신뢰가 보증이 되어야 가능한 서비스로 제3의 기관이 보증함으로써 임직원 횡령이나 해킹을 사전에 방지할 수 있는 역할을 하게 될 뿐만 아니라, 투자자들에게 에스크로 방식의 안전장치를 마련하는 것”이라며 “ICO로 자금 모집 후 암호 화폐 가치 폭락으로 찾아오는 위기를 사전에 방지할 수 있는 솔루션을 제공할 것”이라고 강조했다.',
+            link: 'http://www.fintechpost.co.kr/news/articleView.html?idxno=17348',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2nux545g8nrpglbp',
+            title: '힐스톤 파트너스, 블록체인 기술대회 韓대표 투자기관으로 참여',
+            category: 'article',
+            date: '2018-12-19',
+            source: '글로벌경제신문',
+            summary: '이 대회에는 중국 드라퍼드라곤 펀드(DraperDragon Fund), 노드 캐피탈(Node Capital), 캐나다 미안 넷 캐피탈(Mian Net Capital), 미국 스파크 디지털 캐피탈(Spark Digital Capital), 중국 스타빈 캐피탈(Starvin Capital), 중국 해시 캐피탈(Hash Capital), 중국 홍 체인(Hong Chain) 등 전 세계의 검증된 투자기관들이 참여하며 한국에서는 힐스톤 파트너스가 대표로 참여한다.',
+            link: 'https://www.getnews.co.kr/news/articleView.html?idxno=105846',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2og77mt7cx5m2c7',
+            title: '\"ICO 애초부터 잘못 설계돼…규제 탓만 말고 펀딩방식 바꾸자\"',
+            category: 'article',
+            date: '2018-12-11',
+            source: '이데일리',
+            summary: '황 대표는“블록체인은 네트워크와 데이터베이스(DB), 보안 등 다양한 소프트웨어와 운영체제(OS)에 능한 풀 스택(full stack) 개발 능력이 필요한 만큼 이들 시니어 개발자들이 본격적으로 참여함으로써 국내 블록체인 발전이 본격화할 것”이라고 기대했다.',
+            link: 'https://www.edaily.co.kr/News/Read?newsId=01252966619437536&mediaCodeNo=257&OutLnkChk=Y',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2p1jqdcatg0pck3e',
+            title: '\"블록체인 기업에 초기 시드투자\"…국내 첫 `VC+크립토` 하이브리드펀드 등장',
+            category: 'article',
+            date: '2018-12-11',
+            source: '이데일리',
+            summary: '황 대표는 “블록체인은 전통적인 벤처캐피털이나 사모펀드(PEF)가 들어오기 힘든 영역이고 크립토펀드는 초기 액셀러레이팅 단계부터 투자하기 어려워 공백 상태에 놓여 있다”며 “국내에서 초기에 현금으로 시드 투자를 통해 소액만 있으면 충분히 좋은 탈중앙화 어플리케이션(디앱·dApp)을 만들 수 있는 스타트업에 돈 댈 곳이 없는데 우리가 그 역할을 해보고자 한다”고 말했다.',
+            link: 'https://www.edaily.co.kr/News/Read?newsId=01249686619437536&mediaCodeNo=257&OutLnkChk=Y',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2q2wstusxvvcs00r',
+            title: 'AR 콘텐츠와 블록체인 결합 쇼핑 플랫폼 \'스캐넷체인\', 힐스톤파트너스로부터 투자유치 성공',
+            category: 'article',
+            date: '2018-12-04',
+            source: '녹색경제신문',
+            summary: '황라열 힐스톤 파트너스 대표는 “현재 시장의 분위기는 크게 신경쓰지 않는다. 투자 심리가 위축되었다고 하지만 지금이 오히려 투자 적기라고 생각한다. 20여년 전 IT 버블이 꺼진 직후 오히려 제대로 된 기업들에게 좋은 기회가 찾아왔듯이, 우리 역시 지금의 시장 분위기에서 훌륭한 기업들에게 보다 적극적인 투자를 집행하고자 한다”고 전했다.',
+            link: 'https://greened.kr/news/articleView.html?idxno=85832',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2qraxkxi319d5wo',
+            title: '블록체인 P2P 대출 리텀, 힐스톤파트너스 투자 유치',
+            category: 'article',
+            date: '2018-11-29',
+            source: '지디넷코리아',
+            summary: '황라열 힐스톤파트너스 대표는 “방송에서 내 손으로 직접 탈락시킨 팀이었는데, 이후 위로차 회사를 방문했다가 블록체인 기술에 대한 이해도와 유연성이 굉장히 뛰어난 팀이라는 것을 알게 되었다”며 “이후 해외 파트너 펀드들을 통해 후속 투자를 적극 유치하는 것은 물론, IEO 및 상장까지 적극적으로 서포팅할 계획이다”라고 말했다.',
+            link: 'https://zdnet.co.kr/view/?no=20181129210632',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2rchabd14i6xm3jp',
+            title: '힐스톤 파트너스, ‘힐스톤 블록체인 센터’ 만들다',
+            category: 'article',
+            date: '2018-11-22',
+            source: '글로벌경제신문',
+            summary: '황라열 대표와 한호현 교수는 그동안 블록체인 업계에서 가장 비판적인 태도로 소리를 높여왔다. 이런 상황에서 이런 두 사람이 의기투합했다는 점만으로도 블록체인 업계에서 이목이 집중되고있다.',
+            link: 'https://www.getnews.co.kr/news/articleView.html?idxno=101401',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2s49rtpx0594tdsc',
+            title: '세계 최초 블록체인 서바이벌 \'블록배틀\', 19일 첫방송',
+            category: 'article',
+            date: '2018-10-17',
+            source: '아시아경제',
+            summary: '본선에서는 ▲리준(Li Jun) 온톨로지(Ontology) 대표 ▲토니 구(Tony Gu) 네오글로벌캐피탈(Neo Global Capital) 파트너 ▲엘레나 강(Elena Kang) 후오비 코리아 운영본부 실장 ▲한승준 OKCOIN 마케팅팀장 ▲전하진 블록체인협회 자율규제위원장 ▲황라열 힐스톤파트너스 대표 ▲김성구 넥서스원 대표 ▲레오 리우(Leo Liu) IDCM 대표 ▲김성아 한빗코 거래소 상무 ▲김윤수 블록체인아이 대표 등 블록체인 업계 전문가로 구성된 총 10명의 심사위원단이 함께한다.',
+            link: 'https://view.asiae.co.kr/news/view.htm?idxno=2018101714144689998',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2sozgymld9tywfy',
+            title: '스페이시즈 그랑 서울서 \'디스이즈 블록체인\'행사 열렸다',
+            category: 'article',
+            date: '2018-10-16',
+            source: '뉴스웍스',
+            summary: '상명대학교 디지털화폐연구소와 힐스톤파트너스가 주최한 ‘디스이즈블록체인’이  지난 15일 스페이시즈 그랑 서울에서 성황리에 개최됐다. 디스이즈블록체인 세미나는 블록체인 및 가상화폐의 기술 현황을 살펴보고, 앞으로 어떤 영향을 끼치게 될지 예측해보기 위해 기획됐다.',
+            link: 'https://www.newsworks.co.kr/news/articleView.html?idxno=302957',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2td2ltws75j5akzh',
+            title: '\'암호화폐 법률기준 같이 만들자\' 힐스톤-충정 협업키로',
+            category: 'article',
+            date: '2018-10-02',
+            source: '이데일리',
+            summary: '명확하지 않은 크립토 펀드 투자 방식에 대한 법적 고려를 통해 새로운 방안을 찾는 것을 목표로, 국내 블록체인 산업 진흥을 위한 관련 법률·제도 개선을 위한 구체적인 해결책을 만들어 나갈 계획이다. 이에 따라 향후 블록체인 기술 공동 연구와 암호화폐 투자금 모집(ICO, IEO, 크립토펀드 등)에 관한 국내 법률 기준을 만들어 나가는 작업을 진행한다.',
+            link: 'https://www.edaily.co.kr/News/Read?newsId=03627686619368984&mediaCodeNo=257&OutLnkChk=Y',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2txnloudf1l94c0l',
+            title: '힐스톤파트너스, 대만 블록체인 팀 ioeX에 단독투자',
+            category: 'article',
+            date: '2018-09-17',
+            source: '이데일리',
+            summary: '황라열 힐스톤파트너스 대표는 “전세계 블록체인 업체들에게 공개적으로 기술 검증 행사를 요청하고 있으나, 많은 기업들이 이를 부담스러워 하고 있다. ioeX는 우리의 이러한 제안을 흔쾌히 수락하여 한국에서 성공적인 기술 컨퍼런스를 진행하였으며, 그 과정에서 ioeX의 기술력과 가능성에 대해 충분히 보여주었기에 신속히 투자를 집행하게 되었다”고 설명했다.',
+            link: 'https://www.edaily.co.kr/News/Read?newsId=03371846619341104&mediaCodeNo=257&OutLnkChk=Y',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2uibj9xh9rjsx379',
+            title: 'BTCC·힐스톤파트너스, 세계 첫 블록체인 기술특례 상장 도입',
+            category: 'article',
+            date: '2018-08-29',
+            source: '이데일리',
+            summary: '힐스톤 파트너스 황라열 대표는 “힐스톤 파트너스가 중심이 돼 조성하고 있는 크립토펀드는 철저히 기술 기반 중심으로 운영이 되는데 이를 위해서는 검증된 기술 기업들과의 협업이 필수적”이라며 “그 과정에서 검증된 기술 기업들의 암호화폐들이 상장을 통해 제대로 평가 받는 길이 필요하다고 생각해 이번 기술 특례 상장을 준비하게 됐다”고 밝혔다.',
+            link: 'https://www.edaily.co.kr/News/Read?newsId=02204166619312240&mediaCodeNo=257&OutLnkChk=Y',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2v6mbcobqcx7e0y',
+            title: '진짜 블록체인 전문가 위한 콘퍼런스 ‘이것이 블록체인이다’ 눈길',
+            category: 'article',
+            date: '2018-07-24',
+            source: '글로벌경제신문',
+            summary: '이번 행사에서 딥브레인 체인 기술팀과 토론을 벌일 한국의 패널로는 SKT 신정호 데이터사이언티스트, 블록체인 파트 멋쟁이 사자처럼 이두희 대표, AI 파트 헬스케어 챗봇 김민열 대표, 토큰이코노미 파트 힐스톤 파트너스 황라열 대표 등 분야별 최고 전문가들이 참가해 열띤 토론을 펼칠 예정이다.',
+            link: 'https://www.getnews.co.kr/news/articleView.html?idxno=82358',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2vv75z0ugldvqwq',
+            title: '힐스톤 파트너스의 크립토펀드에 글로벌 기업 ‘로켓인터넷’ 합류',
+            category: 'article',
+            date: '2018-07-12',
+            source: '뉴스웍스',
+            summary: '황라열 힐스톤 파트너스 대표는 “로켓 인터넷과의 전략적 업무 협약을 통해 펀드의 투자 대상이 유럽 및 미국, 일본까지 확대됐다\"면서 \"급속도로 시장에 유입될 블록체인 스타트업들에 대한 로켓인터넷의 노하우 및 검증 시스템을 이용하겠다\"라고 말했다.',
+            link: 'https://www.newsworks.co.kr/news/articleView.html?idxno=200127',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2whutvsaziihobap',
+            title: '블록체인 선진국 네덜란드 마를로스 폼프 담당관-황라열 힐스톤파트너스 대표 대담',
+            category: 'article',
+            date: '2018-07-13',
+            source: '한국경제신문',
+            summary: '마를로스 폼프 네덜란드 블록체인 담당관이 최근 방한했다. 정부 관계자가 아닌 민간 출신으로 공공과 민간에서의 블록체인 프로젝트를 균형감 있게 평가할 수 있는 인물이다. 폼프 담당관(이하 폼프) 인터뷰는 황라열 힐스톤 파트너스 대표(이하 황)와의 대담으로 진행됐다.',
+            link: 'https://www.hankyung.com/article/201807139152g',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2x5nbgvy9qkhw7dk',
+            title: '힐스톤 파트너스, 세계 최초 블록체인 AI 기술기업 딥브레인체인과 기술 협약',
+            category: 'article',
+            date: '2018-07-02',
+            source: '한국경제신문',
+            summary: '이번 파트너쉽 체결에 대해 힐스톤 파트너스 황라열 대표는 “힐스톤 파트너스가 중심이 되어 조성하고 있는 크립토펀드는 철저히 기술 기반 중심으로 운영이 되는데, 이를 위해서는 검증된 기술 기업들과의 협업이 필수적이다.”라며, “이번 파트너쉽을 통해 딥브레인체인과 힐스톤 파트너스가 전세계 블록체인과 인공지능기술의 중심으로 성장할 것이며 이를 바탕으로 기술 기반의 투자가 이루어지는 환경을 만들어나갈 것.”이라고 밝혔다.',
+            link: 'https://www.hankyung.com/article/201807026278i',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2xsxkxn73j6icbg9',
+            title: '힐스톤파트너스, 2000억 규모 글로벌 블록체인펀드 공동조성',
+            category: 'article',
+            date: '2018-06-21',
+            source: '한국경제신문',
+            summary: '힐스톤파트너스는 지난 17일 중국의 대표 블록체인 펀드인 JLAB(지우딩블록체인실험실) 캐피탈, 디지털 자산 투자은행 쿠뱅크(KooBank), 월스트리트 기반 투자회사 소호손(SOHOSON) 인베스트와 공동 펀드 조성을 위한 협약을 체결했다고 21일 밝혔다.',
+            link: 'https://www.hankyung.com/article/201806217771g',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2yetrupipmop3p68',
+            title: '네오(NEO) 코인 창립자 다홍페이, 한국 온다',
+            category: 'article',
+            date: '2018-03-12',
+            source: '한국경제신문',
+            summary: '황라열 대표는 “암호화폐에 집중된 현재 국내 분위기는 바람직하지 않다”며 “블록체인 기술 전반에 대한 올바른 개념이 자리잡기를 희망한다”고 말했다. 또 “한국과 중국의 기술·인프라가 결합되고 블록체인 기술이 발전하도록 양국의 네트워크를 확대시키겠다”고 밝혔다',
+            link: 'https://www.hankyung.com/article/2018031289906',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2z12cttmuqlad82r',
+            title: 'Hillstone: An M&A Fund Breaking Barriers of Entry in the Financial Markets',
+            category: 'foreign',
+            date: '2021-09-09',
+            source: 'bitcoinist',
+            summary: '',
+            link: 'https://bitcoinist.com/hillstone-an-ma-fund-breaking-barriers-of-entry-in-the-financial-markets/',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz2zo651hknwx400gx',
+            title: 'What Start-Up Experience Taught Hillstone Partners CEO Rayol Hwang',
+            category: 'foreign',
+            date: '2021-08-10',
+            source: 'Tech news Vision',
+            summary: '',
+            link: 'https://www.technewsvision.com/what-start-up-experience-taught-hillstone-partners-ceo-rayol-hwang/',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz315vuhowxq2j853a',
+            title: 'How Rayol Hwang Is Revolutionizing Hillstone Partners',
+            category: 'foreign',
+            date: '2021-08-13',
+            source: 'London Daily Post',
+            summary: '',
+            link: 'https://londondailypost.com/how-rayol-hwang-is-revolutionizing-hillstone-partners/',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz31w1zc3ooa2kq9b',
+            title: 'The Mission Behind Hillstone Partners and CEO Rayol Hwang',
+            category: 'foreign',
+            date: '2021-08-10',
+            source: 'Time Bulletin',
+            summary: '',
+            link: 'https://www.timebulletin.com/the-mission-behind-hillstone-partners-and-ceo-rayol-hwang/',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz32usyyfb5pimp3ci',
+            title: 'What Rayol Hwang Sacrificed for Hillstone Partners’ Success',
+            category: 'foreign',
+            date: '2021-09-21',
+            source: 'AllNewsBuzz',
+            summary: '',
+            link: 'https://www.allnewsbuzz.com/what-rayol-hwang-sacrificed-for-hillstone-partners-success/',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz33hxfso0lt6aezj',
+            title: 'The Greatest Challenge in Bringing Blockchain to Finance',
+            category: 'foreign',
+            date: '2021-08-10',
+            source: 'US Times',
+            summary: '',
+            link: 'https://www.ustimesnow.com/the-greatest-challenge-in-bringing-blockchain-to-finance/',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz347n4nek7bcxgsw',
+            title: 'What Inspires Hillstone Partners’ CEO Rayol Hwang',
+            category: 'foreign',
+            date: '2021-09-23',
+            source: 'Fabworld Today',
+            summary: '',
+            link: 'https://www.fabworldtoday.com/what-inspires-hillstone-partners-ceo-rayol-hwang/',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz34pyuksygrr4axvg',
+            title: 'Why Hillstone Partners’ Rayol Hwang Is Obsessed With Innovation',
+            category: 'foreign',
+            date: '2021-08-10',
+            source: 'The Open News',
+            summary: '',
+            link: 'https://www.openthenews.com/why-hillstone-partners-rayol-hwang-is-obsessed-with-innovation/',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz35b5o7m4t40tcpv',
+            title: 'What Makes Hillstone Partners Stand Out From The Pack',
+            category: 'foreign',
+            date: '2021-05-07',
+            source: 'Thrive Global',
+            summary: '',
+            link: 'https://community.thriveglobal.com/what-makes-hillstone-partners-stand-out-from-the-pack/',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz35v1o6thgy6w2hxm',
+            title: 'Meet Rayol Hwang, CEO of Hillstone Partners',
+            category: 'foreign',
+            date: '2022-03-10',
+            source: 'Disrupt',
+            summary: '',
+            link: 'https://disruptmagazine.com/meet-rayol-hwang-ceo-of-hillstone-partners/',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz36fywdjpiz7fauf',
+            title: 'Retail Investors are the Future of Venture Capital',
+            category: 'foreign',
+            date: '2021-08-23',
+            source: 'Nasdaq',
+            summary: '',
+            link: 'https://www.nasdaq.com/articles/retail-investors-are-the-future-of-venture-capital-2021-08-23',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mhz374kya3xxlqj5ynk',
+            title: 'DeFi Matures As Innovative Crypto-Based Futures Issuance And Trading Rises',
+            category: 'foreign',
+            date: '2021-11-17',
+            source: 'Forbes',
+            summary: '',
+            link: 'https://www.forbes.com/sites/lawrencewintermeyer/2021/11/17/defi-matures-as-innovative-crypto-based-futures-issuance-and-trading-rises/',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mi0mpn1ff5h0gskw0u5',
+            title: 'test',
+            category: 'article',
+            date: '2025-11-15',
+            source: 'test',
+            summary: 'test',
+            link: 'https://hillstone.cc',
+            image: '',
+            images: []
+        },
+        {
+            id: 'mi0mpo1bm74b7bf9908',
+            title: 'test',
+            category: 'article',
+            date: '2025-11-15',
+            source: 'test',
+            summary: 'test',
+            link: 'https://hillstone.cc',
             image: '',
             images: []
         }
@@ -125,15 +1170,15 @@ function updateCategoryCounts() {
 }
 
 function renderPressItems() {
-    console.log('Ã°ÂÂÂ¨ renderPressItems() Ã¬ÂÂÃ¬ÂÂ');
+    console.log('ÃÂ°ÃÂÃÂÃÂ¨ renderPressItems() ÃÂ¬ÃÂÃÂÃÂ¬ÃÂÃÂ');
     const container = document.getElementById('pressItemsList');
-    console.log('Ã°ÂÂÂ¦ Container Ã¬ÂÂÃ¬ÂÂ:', container);
+    console.log('ÃÂ°ÃÂÃÂÃÂ¦ Container ÃÂ¬ÃÂÃÂÃÂ¬ÃÂÃÂ:', container);
     const emptyState = document.getElementById('emptyState');
     let filteredItems = currentCategory === 'all' ? allItems : allItems.filter(item => item.category === currentCategory);
-    console.log('Ã°ÂÂÂ Ã­ÂÂÃ­ÂÂ°Ã«Â§ÂÃ«ÂÂ ÃªÂ¸Â°Ã¬ÂÂ¬:', filteredItems.length, 'ÃªÂ°Â (Ã¬Â¹Â´Ã­ÂÂÃªÂ³Â Ã«Â¦Â¬:', currentCategory + ')');
+    console.log('ÃÂ°ÃÂÃÂÃÂ ÃÂ­ÃÂÃÂÃÂ­ÃÂÃÂ°ÃÂ«ÃÂ§ÃÂÃÂ«ÃÂÃÂ ÃÂªÃÂ¸ÃÂ°ÃÂ¬ÃÂÃÂ¬:', filteredItems.length, 'ÃÂªÃÂ°ÃÂ (ÃÂ¬ÃÂ¹ÃÂ´ÃÂ­ÃÂÃÂÃÂªÃÂ³ÃÂ ÃÂ«ÃÂ¦ÃÂ¬:', currentCategory + ')');
     filteredItems.sort((a, b) => new Date(b.date) - new Date(a.date));
     if (filteredItems.length === 0) {
-        console.log('Ã¢ÂÂ Ã¯Â¸Â ÃªÂ¸Â°Ã¬ÂÂ¬ Ã¬ÂÂÃ¬ÂÂ - Ã«Â¹Â Ã¬ÂÂÃ­ÂÂ Ã­ÂÂÃ¬ÂÂ');
+        console.log('ÃÂ¢ÃÂÃÂ ÃÂ¯ÃÂ¸ÃÂ ÃÂªÃÂ¸ÃÂ°ÃÂ¬ÃÂÃÂ¬ ÃÂ¬ÃÂÃÂÃÂ¬ÃÂÃÂ - ÃÂ«ÃÂ¹ÃÂ ÃÂ¬ÃÂÃÂÃÂ­ÃÂÃÂ ÃÂ­ÃÂÃÂÃÂ¬ÃÂÃÂ');
         container.innerHTML = '';
         emptyState.style.display = 'block';
         document.getElementById('pagination').style.display = 'none';
@@ -143,17 +1188,17 @@ function renderPressItems() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const pageItems = filteredItems.slice(startIndex, endIndex);
-    console.log('Ã°ÂÂÂ Ã­ÂÂÃ¬ÂÂ¬ Ã­ÂÂÃ¬ÂÂ´Ã¬Â§Â ÃªÂ¸Â°Ã¬ÂÂ¬:', pageItems.length, 'ÃªÂ°Â (Ã­ÂÂÃ¬ÂÂ´Ã¬Â§Â:', currentPage + ')');
+    console.log('ÃÂ°ÃÂÃÂÃÂ ÃÂ­ÃÂÃÂÃÂ¬ÃÂÃÂ¬ ÃÂ­ÃÂÃÂÃÂ¬ÃÂÃÂ´ÃÂ¬ÃÂ§ÃÂ ÃÂªÃÂ¸ÃÂ°ÃÂ¬ÃÂÃÂ¬:', pageItems.length, 'ÃÂªÃÂ°ÃÂ (ÃÂ­ÃÂÃÂÃÂ¬ÃÂÃÂ´ÃÂ¬ÃÂ§ÃÂ:', currentPage + ')');
     const html = pageItems.map(item => createItemHTML(item)).join('');
-    console.log('Ã°ÂÂÂ Ã¬ÂÂÃ¬ÂÂ±Ã«ÂÂ HTML ÃªÂ¸Â¸Ã¬ÂÂ´:', html.length);
+    console.log('ÃÂ°ÃÂÃÂÃÂ ÃÂ¬ÃÂÃÂÃÂ¬ÃÂÃÂ±ÃÂ«ÃÂÃÂ HTML ÃÂªÃÂ¸ÃÂ¸ÃÂ¬ÃÂÃÂ´:', html.length);
     container.innerHTML = html;
-    console.log('Ã¢ÂÂ HTML Ã¬ÂÂ½Ã¬ÂÂ Ã¬ÂÂÃ«Â£Â');
+    console.log('ÃÂ¢ÃÂÃÂ HTML ÃÂ¬ÃÂÃÂ½ÃÂ¬ÃÂÃÂ ÃÂ¬ÃÂÃÂÃÂ«ÃÂ£ÃÂ');
     renderPagination(filteredItems.length);
     attachItemClickHandlers();
 }
 
 function createItemHTML(item) {
-    // Category badge removed - displaying title, date, source only 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂªÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¸ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬', foreign: 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ­ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ´ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¸ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂªÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¸ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬', photo: 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂªÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ', video: 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ'};
+    // Category badge removed - displaying title, date, source only 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂªÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¸ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬', foreign: 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ­ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ´ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¸ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂªÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¸ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬', photo: 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂªÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ', video: 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ'};
     return `
         <div class="press-item" data-id="${item.id}">
             <h3 class="press-item-title">${escapeHtml(item.title)}</h3>
