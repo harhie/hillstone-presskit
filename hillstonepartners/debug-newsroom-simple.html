@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Newsroom Debug</title>
+</head>
+<body>
+    <h1>Newsroom Debug</h1>
+    <button onclick="checkData()">데이터 확인</button>
+    <button onclick="checkDOM()">DOM 확인</button>
+    <button onclick="openNewsroom()">Newsroom 열기</button>
+    <pre id="output"></pre>
+
+    <script>
+        function checkData() {
+            const output = document.getElementById('output');
+            
+            // Check localStorage
+            const stored = localStorage.getItem('hillstone_press_items');
+            
+            let html = '=== LocalStorage 확인 ===\n';
+            if (stored) {
+                try {
+                    const items = JSON.parse(stored);
+                    html += `✅ 데이터 있음: ${items.length}개\n`;
+                    html += `첫 번째 기사: ${items[0].title}\n`;
+                } catch (e) {
+                    html += `❌ 파싱 오류: ${e.message}\n`;
+                }
+            } else {
+                html += '❌ LocalStorage에 데이터 없음\n';
+                html += '→ js/main.js의 getSampleData()를 사용해야 함\n';
+            }
+            
+            output.textContent = html;
+        }
+        
+        function checkDOM() {
+            const output = document.getElementById('output');
+            
+            // Load main.js
+            const script = document.createElement('script');
+            script.src = 'js/main.js?_=' + Date.now();
+            script.onload = function() {
+                setTimeout(() => {
+                    let html = '=== main.js 확인 ===\n';
+                    html += `allItems 변수: ${typeof allItems !== 'undefined' ? allItems.length + '개' : '❌ 없음'}\n`;
+                    
+                    if (typeof getSampleData === 'function') {
+                        const sample = getSampleData();
+                        html += `✅ getSampleData() 함수 있음\n`;
+                        html += `샘플 데이터: ${sample.length}개\n`;
+                        html += `첫 번째: ${sample[0].title}\n`;
+                    } else {
+                        html += '❌ getSampleData() 함수 없음\n';
+                    }
+                    
+                    output.textContent = html;
+                }, 100);
+            };
+            document.body.appendChild(script);
+        }
+        
+        function openNewsroom() {
+            window.open('newsroom.html', '_blank');
+        }
+    </script>
+</body>
+</html>

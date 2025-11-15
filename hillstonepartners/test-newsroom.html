@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsroom Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            background: #ff6b35;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #e85a2a;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f8;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .success { color: #10b981; font-weight: bold; }
+        .error { color: #ef4444; font-weight: bold; }
+        .info { color: #3b82f6; font-weight: bold; }
+        iframe {
+            width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            min-height: 800px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Newsroom 테스트</h1>
+    
+    <div class="test-panel">
+        <h2>1. 데이터 확인</h2>
+        <button onclick="testData()">데이터 테스트</button>
+        <button onclick="clearStorage()">LocalStorage 초기화</button>
+        <pre id="dataResult">버튼을 클릭하세요...</pre>
+    </div>
+
+    <div class="test-panel">
+        <h2>2. JavaScript 로드 테스트</h2>
+        <button onclick="testJS()">JS 테스트</button>
+        <pre id="jsResult">버튼을 클릭하세요...</pre>
+    </div>
+
+    <div class="test-panel">
+        <h2>3. Newsroom 미리보기</h2>
+        <button onclick="openNewsroom()">새 탭에서 열기</button>
+        <button onclick="showIframe()">iframe으로 보기</button>
+        <div id="iframeContainer"></div>
+    </div>
+
+    <script>
+        function testData() {
+            const result = document.getElementById('dataResult');
+            let output = '=== 데이터 테스트 ===\n\n';
+            
+            // LocalStorage 확인
+            const stored = localStorage.getItem('hillstone_press_items');
+            if (stored) {
+                try {
+                    const items = JSON.parse(stored);
+                    output += `<span class="success">✅ LocalStorage 데이터</span>\n`;
+                    output += `   총 ${items.length}개\n`;
+                    output += `   첫번째: ${items[0].title}\n\n`;
+                } catch (e) {
+                    output += `<span class="error">❌ LocalStorage 파싱 오류</span>\n`;
+                    output += `   ${e.message}\n\n`;
+                }
+            } else {
+                output += `<span class="info">ℹ️ LocalStorage 없음 (정상)</span>\n`;
+                output += `   getSampleData()를 사용합니다\n\n`;
+            }
+            
+            // main.js 확인
+            fetch('js/main.js?_=' + Date.now())
+                .then(r => r.text())
+                .then(text => {
+                    const hasSampleData = text.includes('function getSampleData()');
+                    const match = text.match(/return \[[\s\S]+?\{[\s\S]{0,500}/);
+                    
+                    if (hasSampleData) {
+                        output += `<span class="success">✅ getSampleData() 함수 발견</span>\n`;
+                        output += `   파일 크기: ${text.length} bytes\n`;
+                        
+                        // 데이터 개수 추정
+                        const items = text.match(/\{[\s\S]*?id:/g);
+                        if (items) {
+                            output += `   예상 기사 개수: ${items.length}개\n`;
+                        }
+                    } else {
+                        output += `<span class="error">❌ getSampleData() 함수 없음</span>\n`;
+                    }
+                    
+                    result.innerHTML = output;
+                })
+                .catch(e => {
+                    output += `<span class="error">❌ main.js 로드 실패</span>\n`;
+                    output += `   ${e.message}\n`;
+                    result.innerHTML = output;
+                });
+        }
+        
+        function clearStorage() {
+            localStorage.removeItem('hillstone_press_items');
+            alert('✅ LocalStorage 초기화 완료!\ngetSampleData()를 사용합니다.');
+            testData();
+        }
+        
+        function testJS() {
+            const result = document.getElementById('jsResult');
+            let output = '=== JavaScript 테스트 ===\n\n';
+            
+            // Create test script
+            const script = document.createElement('script');
+            script.src = 'js/main.js?_=' + Date.now();
+            
+            script.onload = function() {
+                setTimeout(() => {
+                    if (typeof getSampleData === 'function') {
+                        const data = getSampleData();
+                        output += `<span class="success">✅ getSampleData() 실행 성공</span>\n`;
+                        output += `   반환된 데이터: ${data.length}개\n`;
+                        output += `   첫번째 기사: "${data[0].title}"\n`;
+                        output += `   카테고리: ${data[0].category}\n`;
+                        output += `   날짜: ${data[0].date}\n`;
+                    } else {
+                        output += `<span class="error">❌ getSampleData() 함수 없음</span>\n`;
+                    }
+                    
+                    if (typeof allItems !== 'undefined') {
+                        output += `\n<span class="success">✅ allItems 변수 존재</span>\n`;
+                        output += `   개수: ${allItems.length}개\n`;
+                    }
+                    
+                    result.innerHTML = output;
+                }, 100);
+            };
+            
+            script.onerror = function() {
+                output += `<span class="error">❌ main.js 로드 실패</span>\n`;
+                result.innerHTML = output;
+            };
+            
+            document.body.appendChild(script);
+        }
+        
+        function openNewsroom() {
+            window.open('newsroom.html', '_blank');
+        }
+        
+        function showIframe() {
+            const container = document.getElementById('iframeContainer');
+            container.innerHTML = '<iframe src="newsroom.html" id="newsroomFrame"></iframe>';
+        }
+    </script>
+</body>
+</html>

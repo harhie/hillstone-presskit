@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRESSKIT 관리자 - Hillstone Partners</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 헤더 -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">PRESSKIT 관리자</h1>
+                    <p class="text-sm text-gray-600">힐스톤파트너스 언론 보도자료 및 미디어 콘텐츠 관리</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="index.html" class="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
+                        <i class="fas fa-home mr-2"></i>홈페이지로
+                    </a>
+                    <button id="add-article-btn" class="px-4 py-2 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-plus mr-2"></i>컨텐츠 추가
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- 검색 및 필터 -->
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <div class="flex flex-col md:flex-row gap-4 mb-4">
+                <div class="flex-1">
+                    <input type="text" id="search-input" placeholder="제목이나 매체명으로 검색..." 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200">
+                </div>
+                <div>
+                    <select id="year-filter" class="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-10 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200">
+                        <option value="">전체 연도</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                    </select>
+                </div>
+                <button id="search-btn" class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                    검색
+                </button>
+            </div>
+            
+            <div class="flex justify-between items-center text-sm text-gray-600">
+                <span id="results-count">총 0개의 기사</span>
+                <span class="text-orange-600 font-medium">⚠️ 관리자 전용 페이지</span>
+            </div>
+        </div>
+
+        <!-- 기사 목록 -->
+        <div id="articles-container" class="space-y-4 mb-8">
+            <!-- 기사들이 여기에 표시됩니다 -->
+        </div>
+
+        <!-- 로딩 -->
+        <div id="loading" class="text-center py-8 hidden">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+            <p class="text-gray-600 mt-2">데이터를 불러오는 중...</p>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div id="pagination" class="flex justify-center items-center space-x-2 mt-8">
+            <!-- 페이지네이션 버튼들 -->
+        </div>
+    </main>
+
+    <!-- 기사 추가/수정 모달 -->
+    <div id="article-modal" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 id="modal-title" class="text-xl font-semibold text-gray-900">기사 추가</h3>
+                <button id="close-modal" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="article-form" class="p-6 space-y-4">
+                <div>
+                    <label for="article-url" class="block text-sm font-medium text-gray-700 mb-1">기사 URL</label>
+                    <input type="url" id="article-url" name="article_url" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200">
+                </div>
+                
+                <div>
+                    <label for="content-type" class="block text-sm font-medium text-gray-700 mb-1">컨텐츠 타입</label>
+                    <select id="content-type" name="content_type" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                            onchange="toggleContentFields()">
+                        <option value="">선택하세요</option>
+                        <option value="기사">기사</option>
+                        <option value="사진">사진</option>
+                        <option value="영상">영상</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="media-name" class="block text-sm font-medium text-gray-700 mb-1">매체명</label>
+                    <input type="text" id="media-name" name="media_name" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200">
+                </div>
+                
+                <div>
+                    <label for="published-date" class="block text-sm font-medium text-gray-700 mb-1">발행일</label>
+                    <input type="date" id="published-date" name="published_date" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200">
+                </div>
+                
+                <div>
+                    <label for="article-title" class="block text-sm font-medium text-gray-700 mb-1">제목</label>
+                    <input type="text" id="article-title" name="title" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200">
+                </div>
+                
+                <div>
+                    <label for="article-summary" class="block text-sm font-medium text-gray-700 mb-1">요약</label>
+                    <textarea id="article-summary" name="summary" rows="4" required
+                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 resize-none"></textarea>
+                </div>
+                
+                <!-- 사진 타입 추가 필드 -->
+                <div id="image-url-field" class="hidden">
+                    <label for="image-url" class="block text-sm font-medium text-gray-700 mb-1">이미지 URL</label>
+                    <input type="url" id="image-url" name="image_url"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                           placeholder="https://example.com/image.jpg">
+                </div>
+                
+                <!-- 영상 타입 추가 필드 -->
+                <div id="video-url-field" class="hidden">
+                    <label for="video-url" class="block text-sm font-medium text-gray-700 mb-1">동영상 URL</label>
+                    <input type="url" id="video-url" name="video_url"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                           placeholder="https://example.com/video.mp4">
+                </div>
+                
+                <div class="flex justify-end space-x-3 pt-4">
+                    <button type="button" id="cancel-btn" class="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200">
+                        취소
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">
+                        저장
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // 관리자 전용 PRESSKIT 관리 스크립트
+        let adminData = {
+            articles: [],
+            currentPage: 1,
+            itemsPerPage: 10,
+            totalItems: 0,
+            totalPages: 0,
+            currentFilter: { year: '', search: '' },
+            isEditing: false,
+            editingId: null
+        };
+
+        // 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            loadArticles();
+        });
+
+        // 이벤트 리스너 설정
+        function setupEventListeners() {
+            document.getElementById('add-article-btn').addEventListener('click', showAddModal);
+            document.getElementById('search-btn').addEventListener('click', handleSearch);
+            document.getElementById('search-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') handleSearch();
+            });
+            document.getElementById('year-filter').addEventListener('change', handleSearch);
+            document.getElementById('close-modal').addEventListener('click', hideModal);
+            document.getElementById('cancel-btn').addEventListener('click', hideModal);
+            document.getElementById('article-form').addEventListener('submit', handleSubmit);
+            
+            document.getElementById('article-modal').addEventListener('click', function(e) {
+                if (e.target === this) hideModal();
+            });
+        }
+
+        // API 기본 URL 감지
+        function getApiBaseUrl() {
+            // 항상 pages.dev로 API 요청 (CORS 문제 해결)
+            return 'https://hillstonepartners.pages.dev';
+        }
+
+        // 샘플 데이터 (빈 배열로 설정)
+        const sampleArticles = [];
+
+        // 기사 데이터 로드
+        async function loadArticles(page = 1) {
+            try {
+                showLoading(true);
+                
+                const { year, search } = adminData.currentFilter;
+                const params = new URLSearchParams({
+                    page: page.toString(),
+                    limit: adminData.itemsPerPage.toString()
+                });
+                
+                if (search) params.append('search', search);
+                if (year) params.append('year', year);
+                
+                try {
+                    const apiUrl = getApiBaseUrl() + `/tables/press_articles?${params}`;
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+                    
+                    if (response.ok && data.data) {
+                        adminData.articles = data.data;
+                        adminData.totalItems = data.total || 0;
+                        adminData.currentPage = data.page || 1;
+                        adminData.totalPages = Math.ceil(adminData.totalItems / adminData.itemsPerPage);
+                        console.log('API에서 데이터 로드 성공');
+                    } else {
+                        throw new Error('API 응답 오류');
+                    }
+                } catch (apiError) {
+                    console.log('API 실패, 샘플 데이터 사용:', apiError.message);
+                    // 샘플 데이터로 fallback
+                    let articles = [...sampleArticles];
+                    
+                    // 연도 필터링
+                    if (year) {
+                        articles = articles.filter(article => article.year.toString() === year);
+                    }
+                    
+                    // 검색 필터링
+                    if (search) {
+                        articles = articles.filter(article => 
+                            article.title.includes(search) || 
+                            article.media_name.includes(search) ||
+                            article.summary.includes(search)
+                        );
+                    }
+                    
+                    adminData.articles = articles;
+                    adminData.totalItems = articles.length;
+                    adminData.currentPage = 1;
+                    adminData.totalPages = Math.ceil(articles.length / adminData.itemsPerPage);
+                }
+                
+                renderArticles();
+                renderPagination();
+                updateCount();
+                
+            } catch (error) {
+                console.error('Critical Error:', error);
+                alert('데이터 로드 중 오류가 발생했습니다.');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // 컨텐츠 타입 필드 토글
+        function toggleContentFields() {
+            const contentType = document.getElementById('content-type').value;
+            const imageField = document.getElementById('image-url-field');
+            const videoField = document.getElementById('video-url-field');
+            const summaryField = document.getElementById('article-summary').parentElement;
+            
+            // 모든 필드 숨기기
+            imageField.classList.add('hidden');
+            videoField.classList.add('hidden');
+            
+            // 요약 필드 표시/숨김
+            if (contentType === '사진') {
+                imageField.classList.remove('hidden');
+                summaryField.classList.add('hidden');
+                document.getElementById('article-summary').removeAttribute('required');
+            } else if (contentType === '영상') {
+                videoField.classList.remove('hidden');
+                summaryField.classList.remove('hidden');
+                document.getElementById('article-summary').removeAttribute('required'); // 영상도 요약 선택적
+            } else {
+                // 기사 타입
+                summaryField.classList.remove('hidden');
+                document.getElementById('article-summary').setAttribute('required', 'required');
+            }
+        }
+
+        // 기사 목록 렌더링
+        function renderArticles() {
+            const container = document.getElementById('articles-container');
+            
+            if (adminData.articles.length === 0) {
+                container.innerHTML = '<div class="text-center py-12 text-gray-500">등록된 기사가 없습니다.</div>';
+                return;
+            }
+            
+            container.innerHTML = adminData.articles.map(article => {
+                const contentType = article.content_type || '기사';
+                const contentTypeConfig = {
+                    '기사': { bgColor: 'bg-orange-100', textColor: 'text-orange-800', icon: 'fas fa-newspaper' },
+                    '사진': { bgColor: 'bg-gray-100', textColor: 'text-gray-800', icon: 'fas fa-image' },
+                    '영상': { bgColor: 'bg-black', textColor: 'text-white', icon: 'fas fa-video' }
+                };
+                const config = contentTypeConfig[contentType] || contentTypeConfig['기사'];
+                
+                return `
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <div class="flex items-center mb-2">
+                                    <span class="inline-flex items-center ${config.bgColor} ${config.textColor} text-xs px-2 py-1 rounded mr-2">
+                                        <i class="${config.icon} mr-1"></i>
+                                        ${contentType}
+                                    </span>
+                                    <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">${article.media_name}</span>
+                                    <span class="text-gray-500 text-sm ml-2">${new Date(article.published_date).toLocaleDateString('ko-KR')}</span>
+                                </div>
+                                <h3 class="text-lg font-semibold mb-2">${article.title}</h3>
+                                <p class="text-gray-600 text-sm mb-3">${article.summary}</p>
+                                <a href="${article.article_url}" target="_blank" class="text-blue-600 hover:text-blue-700 text-sm">
+                                    <i class="fas fa-external-link-alt mr-1"></i>원본 보기
+                                </a>
+                            </div>
+                            <div class="flex space-x-2 ml-4">
+                                <button onclick="editArticle('${article.id}')" class="text-blue-600 hover:text-blue-700 p-2">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button onclick="deleteArticle('${article.id}')" class="text-red-600 hover:text-red-700 p-2">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 검색 처리
+        function handleSearch() {
+            adminData.currentFilter = {
+                search: document.getElementById('search-input').value.trim(),
+                year: document.getElementById('year-filter').value
+            };
+            adminData.currentPage = 1;
+            loadArticles(1);
+        }
+
+        // 모달 표시
+        function showAddModal() {
+            adminData.isEditing = false;
+            adminData.editingId = null;
+            document.getElementById('modal-title').textContent = '컨텐츠 추가';
+            document.getElementById('article-form').reset();
+            toggleContentFields(); // 필드 초기화
+            document.getElementById('article-modal').classList.remove('hidden');
+        }
+
+        // 기사 편집
+        function editArticle(articleId) {
+            const article = adminData.articles.find(a => a.id === articleId);
+            if (!article) return;
+            
+            adminData.isEditing = true;
+            adminData.editingId = articleId;
+            
+            document.getElementById('modal-title').textContent = '컨텐츠 수정';
+            const contentType = article.content_type || '기사';
+            document.getElementById('content-type').value = contentType;
+            document.getElementById('article-url').value = article.article_url || '';
+            document.getElementById('media-name').value = article.media_name || '';
+            document.getElementById('article-title').value = article.title || '';
+            // 사진 타입이 아닌 경우만 요약 설정
+            document.getElementById('article-summary').value = contentType === '사진' ? '' : (article.summary || '');
+            document.getElementById('image-url').value = article.image_url || '';
+            document.getElementById('video-url').value = article.video_url || '';
+            
+            if (article.published_date) {
+                const date = new Date(article.published_date);
+                document.getElementById('published-date').value = date.toISOString().slice(0, 10);
+            }
+            
+            // 컨텐츠 타입에 따른 필드 표시
+            toggleContentFields();
+            
+            document.getElementById('article-modal').classList.remove('hidden');
+        }
+
+        // 기사 삭제
+        async function deleteArticle(articleId) {
+            if (!confirm('정말로 이 기사를 삭제하시겠습니까?')) return;
+            
+            try {
+                const apiUrl = getApiBaseUrl() + `/tables/press_articles/${articleId}`;
+        const response = await fetch(apiUrl, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    alert('기사가 삭제되었습니다.');
+                    loadArticles(adminData.currentPage);
+                } else {
+                    alert('삭제에 실패했습니다.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('오류가 발생했습니다.');
+            }
+        }
+
+        // 모달 숨기기
+        function hideModal() {
+            document.getElementById('article-modal').classList.add('hidden');
+            document.getElementById('article-form').reset();
+        }
+
+        // 폼 제출 처리
+        async function handleSubmit(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const contentType = formData.get('content_type');
+            const articleData = {
+                content_type: contentType,
+                article_url: formData.get('article_url'),
+                media_name: formData.get('media_name'),
+                published_date: formData.get('published_date'),
+                title: formData.get('title'),
+                summary: contentType === '사진' ? '' : formData.get('summary'), // 사진 타입은 요약 없음
+                image_url: formData.get('image_url') || '',
+                video_url: formData.get('video_url') || '',
+                year: new Date(formData.get('published_date')).getFullYear()
+            };
+            
+            try {
+                let response;
+                
+                try {
+                    if (adminData.isEditing) {
+                        const apiUrl = getApiBaseUrl() + `/tables/press_articles/${adminData.editingId}`;
+                        response = await fetch(apiUrl, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(articleData)
+                        });
+                    } else {
+                        const apiUrl = getApiBaseUrl() + '/tables/press_articles';
+                        response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(articleData)
+                        });
+                    }
+                    
+                    if (response.ok) {
+                        alert(adminData.isEditing ? '기사가 수정되었습니다.' : '기사가 추가되었습니다.');
+                        hideModal();
+                        loadArticles(adminData.currentPage);
+                    } else {
+                        throw new Error(`API 오류: ${response.status}`);
+                    }
+                } catch (apiError) {
+                    console.log('API 저장 실패, 데모 모드:', apiError.message);
+                    // 데모 모드에서는 성공한 것처럼 처리
+                    alert('데모 모드: ' + (adminData.isEditing ? '기사가 수정되었습니다.' : '기사가 추가되었습니다.') + '\n(실제 서버에는 저장되지 않습니다)');
+                    hideModal();
+                    loadArticles(adminData.currentPage);
+                }
+            } catch (error) {
+                console.error('Network Error:', error);
+                alert(`네트워크 오류가 발생했습니다: ${error.message}`);
+            }
+        }
+
+        // 유틸리티 함수들
+        function showLoading(show) {
+            document.getElementById('loading').classList.toggle('hidden', !show);
+        }
+
+        function updateCount() {
+            document.getElementById('results-count').textContent = `총 ${adminData.totalItems}개의 기사`;
+        }
+
+        function renderPagination() {
+            const container = document.getElementById('pagination');
+            if (adminData.totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            let html = '';
+            
+            if (adminData.currentPage > 1) {
+                html += `<button onclick="changePage(${adminData.currentPage - 1})" class="px-3 py-2 bg-white border rounded hover:bg-gray-50">이전</button>`;
+            }
+            
+            for (let i = Math.max(1, adminData.currentPage - 2); i <= Math.min(adminData.totalPages, adminData.currentPage + 2); i++) {
+                html += `<button onclick="changePage(${i})" class="px-3 py-2 border rounded ${i === adminData.currentPage ? 'bg-orange-500 text-white' : 'bg-white hover:bg-gray-50'}">${i}</button>`;
+            }
+            
+            if (adminData.currentPage < adminData.totalPages) {
+                html += `<button onclick="changePage(${adminData.currentPage + 1})" class="px-3 py-2 bg-white border rounded hover:bg-gray-50">다음</button>`;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function changePage(page) {
+            adminData.currentPage = page;
+            loadArticles(page);
+        }
+
+        // 전역 함수로 노출
+        window.editArticle = editArticle;
+        window.deleteArticle = deleteArticle;
+        window.changePage = changePage;
+        window.toggleContentFields = toggleContentFields;
+    </script>
+</body>
+</html>

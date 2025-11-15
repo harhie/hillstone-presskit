@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Newsroom</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #ff6b35;
+        }
+        .debug-section {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            border-left: 4px solid #ff6b35;
+        }
+        .success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        .error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        .warning {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+        }
+        pre {
+            background: #212529;
+            color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #e85a2a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐛 Newsroom Debug Tool</h1>
+        
+        <button class="btn" onclick="runDiagnostics()">🔍 Run Full Diagnostics</button>
+        <button class="btn" onclick="forceLoad()">🔄 Force Load from LocalStorage</button>
+        <button class="btn" onclick="clearAndReload()">🗑️ Clear Cache & Reload</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        function runDiagnostics() {
+            const resultsDiv = document.getElementById('results');
+            let html = '';
+
+            // 1. LocalStorage 확인
+            html += '<div class="debug-section">';
+            html += '<h3>📦 1. LocalStorage 확인</h3>';
+            const stored = localStorage.getItem('hillstone_press_items');
+            if (stored) {
+                try {
+                    const items = JSON.parse(stored);
+                    html += `<div class="success">✅ LocalStorage에 ${items.length}개 기사 발견!</div>`;
+                    html += `<p>첫 번째 기사: ${items[0]?.title || 'N/A'}</p>`;
+                    html += `<p>마지막 기사: ${items[items.length-1]?.title || 'N/A'}</p>`;
+                } catch (e) {
+                    html += `<div class="error">❌ 파싱 에러: ${e.message}</div>`;
+                }
+            } else {
+                html += '<div class="error">❌ LocalStorage에 데이터 없음!</div>';
+            }
+            html += '</div>';
+
+            // 2. getSampleData() 확인
+            html += '<div class="debug-section">';
+            html += '<h3>🔧 2. getSampleData() 함수 확인</h3>';
+            try {
+                if (typeof getSampleData === 'function') {
+                    const sampleData = getSampleData();
+                    html += `<div class="success">✅ 함수 존재: ${sampleData.length}개 반환</div>`;
+                    html += `<p>첫 번째 기사: ${sampleData[0]?.title || 'N/A'}</p>`;
+                } else {
+                    html += '<div class="error">❌ getSampleData 함수가 없습니다!</div>';
+                }
+            } catch (e) {
+                html += `<div class="error">❌ 함수 실행 에러: ${e.message}</div>`;
+            }
+            html += '</div>';
+
+            // 3. loadPressItems() 실행 결과
+            html += '<div class="debug-section">';
+            html += '<h3>📥 3. loadPressItems() 실행</h3>';
+            try {
+                loadPressItems();
+                html += `<div class="success">✅ 실행 완료</div>`;
+                html += `<p>pressItems 개수: ${pressItems?.length || 0}</p>`;
+                html += `<p>currentCategory: ${currentCategory}</p>`;
+                html += `<p>currentPage: ${currentPage}</p>`;
+            } catch (e) {
+                html += `<div class="error">❌ 실행 에러: ${e.message}</div>`;
+            }
+            html += '</div>';
+
+            // 4. 전역 변수 확인
+            html += '<div class="debug-section">';
+            html += '<h3>🌐 4. 전역 변수 확인</h3>';
+            html += `<pre>pressItems: ${JSON.stringify(pressItems?.slice(0, 2), null, 2)}
+...총 ${pressItems?.length || 0}개
+
+currentCategory: ${currentCategory}
+currentPage: ${currentPage}
+itemsPerPage: ${itemsPerPage}</pre>`;
+            html += '</div>';
+
+            // 5. DOM 요소 확인
+            html += '<div class="debug-section">';
+            html += '<h3>🎨 5. DOM 요소 확인</h3>';
+            const container = document.getElementById('pressItemsContainer') || document.getElementById('pressItemsList');
+            const emptyState = document.getElementById('emptyState');
+            const pagination = document.getElementById('pagination');
+            
+            html += `<p>pressItemsContainer: ${container ? '✅ 존재' : '❌ 없음'}</p>`;
+            html += `<p>emptyState: ${emptyState ? '✅ 존재' : '❌ 없음'}</p>`;
+            html += `<p>pagination: ${pagination ? '✅ 존재' : '❌ 없음'}</p>`;
+            html += '</div>';
+
+            // 6. 콘솔 로그 확인
+            html += '<div class="debug-section warning">';
+            html += '<h3>📋 6. 콘솔 로그</h3>';
+            html += '<p>F12를 눌러 콘솔 탭을 확인하세요.</p>';
+            html += '<p>다음 메시지를 찾으세요:</p>';
+            html += '<ul>';
+            html += '<li>"✅ LocalStorage 데이터 로드: X개 기사"</li>';
+            html += '<li>"📦 GitHub 샘플 데이터 로드: X개 기사"</li>';
+            html += '<li>"⚠️ 데이터 없음"</li>';
+            html += '</ul>';
+            html += '</div>';
+
+            resultsDiv.innerHTML = html;
+        }
+
+        function forceLoad() {
+            const stored = localStorage.getItem('hillstone_press_items');
+            if (!stored) {
+                alert('❌ LocalStorage에 데이터가 없습니다!');
+                return;
+            }
+
+            const items = JSON.parse(stored);
+            
+            // 강제로 전역 변수에 할당
+            window.pressItems = items;
+            
+            // 수동으로 렌더링 시도
+            if (typeof renderPressItems === 'function') {
+                renderPressItems();
+                alert(`✅ ${items.length}개 기사를 강제로 로드했습니다!`);
+            } else {
+                alert('❌ renderPressItems 함수가 없습니다!');
+            }
+        }
+
+        function clearAndReload() {
+            if (confirm('브라우저 캐시를 삭제하고 페이지를 새로고침합니다. 계속하시겠습니까?')) {
+                // Service Worker 제거
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistrations().then(registrations => {
+                        registrations.forEach(registration => registration.unregister());
+                    });
+                }
+                
+                // 강력한 새로고침
+                window.location.reload(true);
+            }
+        }
+
+        // 페이지 로드 시 자동 진단
+        window.addEventListener('load', () => {
+            setTimeout(runDiagnostics, 500);
+        });
+    </script>
+</body>
+</html>

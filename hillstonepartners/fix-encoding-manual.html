@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인코딩 수동 복구 도구</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        .status {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #764ba2;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .btn-danger {
+            background: #dc3545;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            max-height: 400px;
+        }
+        .step {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+        }
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 인코딩 수동 복구 도구</h1>
+        <p>이 도구는 <code>js/main.js</code> 파일의 1165번 줄에 있는 한글 인코딩 오류를 수동으로 복구합니다.</p>
+        
+        <div class="step">
+            <h3><span class="step-number">1</span>현재 상태 확인</h3>
+            <button onclick="checkCurrentState()">상태 확인</button>
+            <div id="stateResult"></div>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">2</span>main.js 파일 다운로드 & 수정</h3>
+            <p class="warning">주의: 이 작업은 <code>js/main.js</code> 파일의 1165번 줄을 수정합니다.</p>
+            <button onclick="downloadAndFixMainJs()">main.js 다운로드 & 복구</button>
+            <div id="fixResult"></div>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">3</span>admin.js 인코딩 함수 확인</h3>
+            <p>admin.js에 새로운 UTF-8 인코딩 함수가 추가되었는지 확인합니다.</p>
+            <button onclick="checkAdminEncoding()">admin.js 확인</button>
+            <div id="adminResult"></div>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">4</span>테스트 - GitHub 동기화</h3>
+            <p>수정이 완료되면 관리자 페이지에서 GitHub 동기화를 테스트하세요.</p>
+            <button onclick="openAdmin()">관리자 페이지 열기</button>
+        </div>
+    </div>
+
+    <script>
+        async function checkCurrentState() {
+            const result = document.getElementById('stateResult');
+            result.innerHTML = '<div class="info">확인 중...</div>';
+            
+            try {
+                const response = await fetch('js/main.js?_=' + Date.now());
+                const content = await response.text();
+                
+                // Check line 1165
+                const lines = content.split('\n');
+                const line1165 = lines[1164]; // 0-indexed
+                
+                const hasCorruption = line1165.includes('ÃÂ') || line1165.includes('Â');
+                const hasKorean = line1165.includes('기사') && line1165.includes('해외기사');
+                
+                let html = '<pre>1165번 줄 내용:\n' + line1165 + '</pre>';
+                
+                if (hasKorean) {
+                    html += '<div class="success">✅ 한글이 올바르게 표시되고 있습니다!</div>';
+                } else if (hasCorruption) {
+                    html += '<div class="error">❌ 인코딩 오류가 감지되었습니다. 2단계로 진행하세요.</div>';
+                } else {
+                    html += '<div class="warning">⚠️ 확인이 필요합니다.</div>';
+                }
+                
+                result.innerHTML = html;
+            } catch (error) {
+                result.innerHTML = '<div class="error">❌ 파일 확인 실패: ' + error.message + '</div>';
+            }
+        }
+        
+        async function downloadAndFixMainJs() {
+            const result = document.getElementById('fixResult');
+            result.innerHTML = '<div class="info">다운로드 및 수정 중...</div>';
+            
+            try {
+                const response = await fetch('js/main.js?_=' + Date.now());
+                let content = await response.text();
+                
+                // Find and replace the corrupted line
+                const lines = content.split('\n');
+                
+                // Find the line with categoryLabels
+                let targetLineIndex = -1;
+                for (let i = 0; i < lines.length; i++) {
+                    if (lines[i].includes('categoryLabels') && lines[i].includes('article:')) {
+                        targetLineIndex = i;
+                        break;
+                    }
+                }
+                
+                if (targetLineIndex === -1) {
+                    throw new Error('categoryLabels 라인을 찾을 수 없습니다.');
+                }
+                
+                // Replace with correct Korean text
+                const correctLine = "    const categoryLabels = {article: '기사', foreign: '해외기사', photo: '공지', video: '영상'};";
+                lines[targetLineIndex] = correctLine;
+                
+                // Rejoin content
+                const fixedContent = lines.join('\n');
+                
+                // Create download
+                const blob = new Blob([fixedContent], { type: 'text/javascript;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'main.js';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                result.innerHTML = `
+                    <div class="success">
+                        ✅ main.js 파일이 수정되어 다운로드되었습니다!<br><br>
+                        <strong>다음 단계:</strong><br>
+                        1. 다운로드된 <code>main.js</code> 파일을 <code>js/</code> 폴더에 덮어쓰기<br>
+                        2. 브라우저 캐시 삭제 (Ctrl+Shift+Delete)<br>
+                        3. newsroom.html 페이지 새로고침하여 확인
+                    </div>
+                    <pre>수정된 라인 (${targetLineIndex + 1}번):\n${correctLine}</pre>
+                `;
+            } catch (error) {
+                result.innerHTML = '<div class="error">❌ 수정 실패: ' + error.message + '</div>';
+            }
+        }
+        
+        async function checkAdminEncoding() {
+            const result = document.getElementById('adminResult');
+            result.innerHTML = '<div class="info">확인 중...</div>';
+            
+            try {
+                const response = await fetch('js/admin.js?_=' + Date.now());
+                const content = await response.text();
+                
+                const hasNewFunction = content.includes('base64EncodeUnicode');
+                const hasTextEncoder = content.includes('TextEncoder');
+                const oldEncoding = content.includes('btoa(unescape(encodeURIComponent(newContent)))');
+                
+                let html = '';
+                
+                if (hasNewFunction && hasTextEncoder && !oldEncoding) {
+                    html = '<div class="success">✅ admin.js에 새로운 UTF-8 인코딩 함수가 올바르게 적용되었습니다!</div>';
+                    html += '<pre>function base64EncodeUnicode(str) {\n    const utf8Bytes = new TextEncoder().encode(str);\n    ...\n}</pre>';
+                } else if (oldEncoding) {
+                    html = '<div class="error">❌ 이전 인코딩 방식이 아직 사용되고 있습니다. admin.js를 업데이트해야 합니다.</div>';
+                } else if (!hasNewFunction) {
+                    html = '<div class="warning">⚠️ base64EncodeUnicode 함수를 찾을 수 없습니다.</div>';
+                }
+                
+                result.innerHTML = html;
+            } catch (error) {
+                result.innerHTML = '<div class="error">❌ 확인 실패: ' + error.message + '</div>';
+            }
+        }
+        
+        function openAdmin() {
+            window.open('newsroom-admin.html', '_blank');
+        }
+    </script>
+</body>
+</html>

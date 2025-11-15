@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Import Data</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #ff6b35;
+            margin-bottom: 20px;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+        .btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            background: #e85a2a;
+        }
+        .btn-secondary {
+            background: #6c757d;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        textarea {
+            width: 100%;
+            height: 300px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+        #status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        .step {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #ff6b35;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📥 Simple Import Data</h1>
+        
+        <div class="info">
+            <strong>💡 이 방법이 가장 확실합니다!</strong><br>
+            복잡한 파싱 없이 직접 데이터를 가져옵니다.
+        </div>
+
+        <div class="step">
+            <strong>1단계: GitHub에서 데이터 복사</strong><br>
+            <ol>
+                <li><a href="https://github.com/harhie/hillstone-presskit/blob/main/js/main.js" target="_blank">GitHub js/main.js 열기</a></li>
+                <li><code>function getSampleData()</code> 찾기</li>
+                <li><code>return [</code>부터 <code>];</code>까지 <strong>배열 부분만</strong> 복사</li>
+                <li>아래 텍스트 박스에 붙여넣기</li>
+            </ol>
+        </div>
+
+        <textarea id="dataInput" placeholder="여기에 GitHub의 getSampleData() 함수에서 return [ ... ]; 배열 부분을 붙여넣으세요.
+
+예시:
+[
+    {
+        id: '1',
+        title: '기사 제목',
+        category: 'article',
+        date: '2024-01-01',
+        source: '출처',
+        summary: '요약',
+        link: 'https://...',
+        image: '',
+        images: []
+    },
+    ...
+]"></textarea>
+
+        <button class="btn" onclick="importData()">📥 Import to LocalStorage</button>
+        <button class="btn btn-secondary" onclick="clearInput()">🗑️ Clear</button>
+        
+        <div id="status"></div>
+
+        <div class="step" style="margin-top: 30px;">
+            <strong>🎯 더 쉬운 방법: 관리자 페이지에서 직접 복사</strong><br>
+            <ol>
+                <li><code>newsroom-admin.html</code> 열기</li>
+                <li>F12 콘솔에서 실행: <code>copy(localStorage.getItem('hillstone_press_items'))</code></li>
+                <li><strong>다른 브라우저나 기기</strong>에서 이 페이지 열기</li>
+                <li>위 텍스트박스에 붙여넣기</li>
+                <li>"Import to LocalStorage" 클릭</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function clearInput() {
+            document.getElementById('dataInput').value = '';
+        }
+
+        function importData() {
+            const statusDiv = document.getElementById('status');
+            const input = document.getElementById('dataInput').value.trim();
+
+            if (!input) {
+                statusDiv.innerHTML = '<div class="error">❌ 데이터를 입력해주세요!</div>';
+                return;
+            }
+
+            try {
+                // 입력된 데이터 파싱
+                let items;
+
+                // JSON 형식인지 확인 (관리자 페이지에서 복사한 경우)
+                if (input.startsWith('[{') && input.includes('"id"')) {
+                    // JSON.parse 시도
+                    items = JSON.parse(input);
+                } else {
+                    // JavaScript 배열 형식 (GitHub에서 복사한 경우)
+                    // Function 생성자로 안전하게 파싱
+                    const func = new Function('return ' + input);
+                    items = func();
+                }
+
+                // 데이터 검증
+                if (!Array.isArray(items)) {
+                    throw new Error('배열 형식이 아닙니다!');
+                }
+
+                if (items.length === 0) {
+                    throw new Error('데이터가 비어있습니다!');
+                }
+
+                // 첫 번째 항목 구조 확인
+                const firstItem = items[0];
+                if (!firstItem.id || !firstItem.title || !firstItem.category) {
+                    throw new Error('데이터 구조가 올바르지 않습니다!');
+                }
+
+                // LocalStorage에 저장
+                localStorage.setItem('hillstone_press_items', JSON.stringify(items));
+
+                statusDiv.innerHTML = `
+                    <div class="success">
+                        <strong>✅ 성공!</strong><br>
+                        <strong>${items.length}개</strong>의 기사를 LocalStorage에 저장했습니다!<br><br>
+                        <strong>다음 단계:</strong><br>
+                        1. <code>newsroom.html</code>을 새로고침하여 확인하세요 (Ctrl+Shift+R)<br>
+                        2. <code>newsroom-admin.html</code>에서도 확인하세요<br>
+                        3. 전체(${items.length}) 표시를 확인하세요<br><br>
+                        <strong>카테고리별 개수:</strong><br>
+                        - 기사: ${items.filter(i => i.category === 'article').length}개<br>
+                        - 해외기사: ${items.filter(i => i.category === 'foreign').length}개<br>
+                        - 공지: ${items.filter(i => i.category === 'photo').length}개<br>
+                        - 영상: ${items.filter(i => i.category === 'video').length}개
+                    </div>
+                `;
+
+                // 입력창 비우기
+                clearInput();
+
+            } catch (error) {
+                console.error('Error:', error);
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <strong>❌ 파싱 실패!</strong><br>
+                        ${error.message}<br><br>
+                        <strong>해결 방법:</strong><br>
+                        1. GitHub에서 <strong>배열 부분만</strong> 복사했는지 확인하세요<br>
+                        2. <code>[</code>로 시작하고 <code>]</code>로 끝나야 합니다<br>
+                        3. <code>function getSampleData()</code> 부분은 제외하세요<br>
+                        4. <code>return</code> 키워드도 제외하세요<br><br>
+                        <strong>콘솔(F12)에서 상세 로그를 확인하세요.</strong>
+                    </div>
+                `;
+            }
+        }
+
+        // Ctrl+V 감지하여 자동 포맷팅
+        document.getElementById('dataInput').addEventListener('paste', function(e) {
+            setTimeout(() => {
+                const value = this.value.trim();
+                // return [ ... ] 형식이면 배열 부분만 추출
+                const match = value.match(/return\s*(\[[\s\S]*\])\s*;?/);
+                if (match) {
+                    this.value = match[1];
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>
