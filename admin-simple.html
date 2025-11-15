@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRESSKIT 관리자 - Hillstone Partners</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 헤더 -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">PRESSKIT 관리자 (로컬 버전)</h1>
+                    <p class="text-sm text-gray-600">힐스톤파트너스 언론 보도자료 및 미디어 콘텐츠 관리</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="index.html" class="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
+                        <i class="fas fa-home mr-2"></i>홈페이지로
+                    </a>
+                    <button id="add-article-btn" class="px-4 py-2 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors">
+                        <i class="fas fa-plus mr-2"></i>컨텐츠 추가
+                    </button>
+                    <button id="export-btn" class="px-4 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition-colors">
+                        <i class="fas fa-download mr-2"></i>데이터 내보내기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- 필터 섹션 -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div class="flex flex-col sm:flex-row gap-4">
+                <div class="flex-1">
+                    <input type="text" id="search-input" placeholder="제목이나 매체명으로 검색..." 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                </div>
+                <div>
+                    <select id="year-filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500">
+                        <option value="">전체 연도</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                    </select>
+                </div>
+                <button id="search-btn" class="px-6 py-2 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors">
+                    검색
+                </button>
+            </div>
+        </div>
+
+        <!-- 통계 -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg font-medium text-gray-900">총 <span id="total-count">0</span>개의 기사</h3>
+                    <p class="text-sm text-gray-600">로컬 스토리지에 저장된 데이터</p>
+                </div>
+                <div class="text-right">
+                    <button id="clear-all" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
+                        <i class="fas fa-trash mr-2"></i>모든 데이터 삭제
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 기사 목록 -->
+        <div class="bg-white rounded-lg shadow-sm">
+            <div id="articles-container" class="divide-y divide-gray-200">
+                <!-- 기사 목록이 여기에 렌더링됩니다 -->
+            </div>
+        </div>
+    </main>
+
+    <!-- 모달 -->
+    <div id="article-modal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0"></div>
+        <div class="relative flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="flex items-center justify-between p-6 border-b">
+                    <h2 id="modal-title" class="text-xl font-bold text-gray-900">컨텐츠 추가</h2>
+                    <button id="close-modal" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <form id="article-form" class="p-6 space-y-6">
+                    <!-- 기사 URL -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">기사 URL</label>
+                        <input type="url" name="article_url" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    </div>
+
+                    <!-- 컨텐츠 타입 -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">컨텐츠 타입</label>
+                        <select name="content_type" id="content-type" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500">
+                            <option value="기사">기사</option>
+                            <option value="사진">사진</option>
+                            <option value="영상">영상</option>
+                        </select>
+                    </div>
+
+                    <!-- 매체명 -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">매체명</label>
+                        <input type="text" name="media_name" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    </div>
+
+                    <!-- 발행일 -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">발행일</label>
+                        <input type="date" name="published_date" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    </div>
+
+                    <!-- 제목 -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">제목</label>
+                        <input type="text" name="title" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    </div>
+
+                    <!-- 요약 -->
+                    <div id="summary-field">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">요약</label>
+                        <textarea name="summary" rows="4"
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"></textarea>
+                    </div>
+
+                    <!-- 이미지 URL -->
+                    <div id="image-url-field" style="display: none;">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">이미지 URL</label>
+                        <input type="url" name="image_url"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    </div>
+
+                    <!-- 비디오 URL -->
+                    <div id="video-url-field" style="display: none;">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">비디오 URL</label>
+                        <input type="url" name="video_url"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    </div>
+
+                    <!-- 버튼 -->
+                    <div class="flex space-x-4 pt-4">
+                        <button type="button" id="cancel-btn" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                            취소
+                        </button>
+                        <button type="submit" class="flex-1 px-4 py-2 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors">
+                            저장
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 로컬 스토리지 키
+        const STORAGE_KEY = 'hillstone_articles';
+        
+        // 어드민 데이터
+        let adminData = {
+            articles: [],
+            filteredArticles: [],
+            isEditing: false,
+            editingId: null
+        };
+
+        // 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFromStorage();
+            renderArticles();
+            updateCount();
+            bindEvents();
+        });
+
+        // 이벤트 바인딩
+        function bindEvents() {
+            document.getElementById('add-article-btn').addEventListener('click', () => showModal());
+            document.getElementById('close-modal').addEventListener('click', hideModal);
+            document.getElementById('cancel-btn').addEventListener('click', hideModal);
+            document.getElementById('article-form').addEventListener('submit', handleSubmit);
+            document.getElementById('content-type').addEventListener('change', toggleContentFields);
+            document.getElementById('search-btn').addEventListener('click', filterArticles);
+            document.getElementById('export-btn').addEventListener('click', exportData);
+            document.getElementById('clear-all').addEventListener('click', clearAllData);
+            
+            // 모달 외부 클릭시 닫기
+            document.getElementById('article-modal').addEventListener('click', function(e) {
+                if (e.target === this) hideModal();
+            });
+        }
+
+        // 로컬 스토리지에서 로드
+        function loadFromStorage() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                adminData.articles = JSON.parse(stored);
+            }
+            adminData.filteredArticles = [...adminData.articles];
+        }
+
+        // 로컬 스토리지에 저장
+        function saveToStorage() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(adminData.articles));
+        }
+
+        // 기사 목록 렌더링
+        function renderArticles() {
+            const container = document.getElementById('articles-container');
+            
+            if (adminData.filteredArticles.length === 0) {
+                container.innerHTML = `
+                    <div class="p-8 text-center text-gray-500">
+                        <i class="fas fa-newspaper text-4xl mb-4"></i>
+                        <p>등록된 기사가 없습니다.</p>
+                        <p class="text-sm">상단의 "컨텐츠 추가" 버튼을 클릭해서 기사를 추가해보세요.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const html = adminData.filteredArticles.map(article => `
+                <div class="p-6 hover:bg-gray-50">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeColor(article.content_type)}">
+                                    ${article.content_type}
+                                </span>
+                                <span class="text-sm text-gray-500">${article.media_name}</span>
+                                <span class="text-sm text-gray-400">${formatDate(article.published_date)}</span>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">${article.title}</h3>
+                            ${article.summary ? `<p class="text-gray-600 text-sm line-clamp-2">${article.summary}</p>` : ''}
+                            <a href="${article.article_url}" target="_blank" class="inline-flex items-center text-orange-600 hover:text-orange-700 text-sm mt-2">
+                                <i class="fas fa-external-link-alt mr-1"></i>
+                                원문 보기
+                            </a>
+                        </div>
+                        <div class="flex space-x-2 ml-4">
+                            <button onclick="editArticle('${article.id}')" class="p-2 text-gray-400 hover:text-blue-600">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteArticle('${article.id}')" class="p-2 text-gray-400 hover:text-red-600">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            container.innerHTML = html;
+        }
+
+        // 컨텐츠 타입별 색상
+        function getTypeColor(type) {
+            const colors = {
+                '기사': 'bg-blue-100 text-blue-800',
+                '사진': 'bg-green-100 text-green-800',
+                '영상': 'bg-purple-100 text-purple-800'
+            };
+            return colors[type] || 'bg-gray-100 text-gray-800';
+        }
+
+        // 날짜 포맷
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ko-KR');
+        }
+
+        // 모달 표시
+        function showModal(article = null) {
+            adminData.isEditing = !!article;
+            adminData.editingId = article ? article.id : null;
+            
+            const modal = document.getElementById('article-modal');
+            const title = document.getElementById('modal-title');
+            const form = document.getElementById('article-form');
+            
+            title.textContent = adminData.isEditing ? '컨텐츠 수정' : '컨텐츠 추가';
+            
+            if (article) {
+                // 폼에 기존 데이터 채우기
+                form.article_url.value = article.article_url;
+                form.content_type.value = article.content_type;
+                form.media_name.value = article.media_name;
+                form.published_date.value = article.published_date.split('T')[0];
+                form.title.value = article.title;
+                form.summary.value = article.summary || '';
+                form.image_url.value = article.image_url || '';
+                form.video_url.value = article.video_url || '';
+            } else {
+                form.reset();
+            }
+            
+            toggleContentFields();
+            modal.classList.remove('hidden');
+        }
+
+        // 모달 숨기기
+        function hideModal() {
+            document.getElementById('article-modal').classList.add('hidden');
+            document.getElementById('article-form').reset();
+        }
+
+        // 컨텐츠 타입에 따른 필드 토글
+        function toggleContentFields() {
+            const contentType = document.getElementById('content-type').value;
+            const imageField = document.getElementById('image-url-field');
+            const videoField = document.getElementById('video-url-field');
+            const summaryField = document.getElementById('summary-field');
+            
+            // 모든 필드 숨기기
+            imageField.style.display = 'none';
+            videoField.style.display = 'none';
+            
+            // 타입에 따라 필드 표시
+            if (contentType === '사진') {
+                imageField.style.display = 'block';
+                summaryField.style.display = 'none';
+            } else if (contentType === '영상') {
+                videoField.style.display = 'block';
+                summaryField.style.display = 'block';
+            } else {
+                summaryField.style.display = 'block';
+            }
+        }
+
+        // 폼 제출 처리
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const articleData = {
+                id: adminData.isEditing ? adminData.editingId : Date.now().toString(),
+                content_type: formData.get('content_type'),
+                article_url: formData.get('article_url'),
+                media_name: formData.get('media_name'),
+                published_date: formData.get('published_date') + 'T00:00:00Z',
+                title: formData.get('title'),
+                summary: formData.get('summary') || '',
+                image_url: formData.get('image_url') || '',
+                video_url: formData.get('video_url') || '',
+                year: new Date(formData.get('published_date')).getFullYear()
+            };
+            
+            if (adminData.isEditing) {
+                // 기존 기사 수정
+                const index = adminData.articles.findIndex(a => a.id === adminData.editingId);
+                if (index !== -1) {
+                    adminData.articles[index] = articleData;
+                }
+            } else {
+                // 새 기사 추가
+                adminData.articles.unshift(articleData);
+            }
+            
+            saveToStorage();
+            loadFromStorage();
+            filterArticles();
+            updateCount();
+            hideModal();
+            
+            alert(adminData.isEditing ? '기사가 수정되었습니다.' : '기사가 추가되었습니다.');
+        }
+
+        // 기사 수정
+        function editArticle(id) {
+            const article = adminData.articles.find(a => a.id === id);
+            if (article) {
+                showModal(article);
+            }
+        }
+
+        // 기사 삭제
+        function deleteArticle(id) {
+            if (confirm('이 기사를 삭제하시겠습니까?')) {
+                adminData.articles = adminData.articles.filter(a => a.id !== id);
+                saveToStorage();
+                loadFromStorage();
+                filterArticles();
+                updateCount();
+                alert('기사가 삭제되었습니다.');
+            }
+        }
+
+        // 필터링
+        function filterArticles() {
+            const search = document.getElementById('search-input').value.toLowerCase();
+            const year = document.getElementById('year-filter').value;
+            
+            adminData.filteredArticles = adminData.articles.filter(article => {
+                const matchesSearch = !search || 
+                    article.title.toLowerCase().includes(search) ||
+                    article.media_name.toLowerCase().includes(search) ||
+                    (article.summary && article.summary.toLowerCase().includes(search));
+                
+                const matchesYear = !year || article.year.toString() === year;
+                
+                return matchesSearch && matchesYear;
+            });
+            
+            renderArticles();
+            updateCount();
+        }
+
+        // 카운트 업데이트
+        function updateCount() {
+            document.getElementById('total-count').textContent = adminData.filteredArticles.length;
+        }
+
+        // 데이터 내보내기
+        function exportData() {
+            const data = JSON.stringify(adminData.articles, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `hillstone-articles-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // 모든 데이터 삭제
+        function clearAllData() {
+            if (confirm('모든 기사 데이터를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+                adminData.articles = [];
+                adminData.filteredArticles = [];
+                saveToStorage();
+                renderArticles();
+                updateCount();
+                alert('모든 데이터가 삭제되었습니다.');
+            }
+        }
+    </script>
+</body>
+</html>

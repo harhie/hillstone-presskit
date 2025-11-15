@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direct Load</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #ff6b35;
+        }
+        .btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px 0;
+            width: 100%;
+        }
+        .btn:hover {
+            background: #e85a2a;
+        }
+        #status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Direct Load (최종 해결책)</h1>
+        
+        <p><strong>현재 LocalStorage:</strong> <span id="currentCount">확인 중...</span></p>
+        
+        <button class="btn" onclick="loadDirectly()">
+            📥 GitHub에서 직접 다운로드 (최종)
+        </button>
+        
+        <div id="status"></div>
+    </div>
+
+    <script>
+        // 현재 개수 표시
+        window.addEventListener('load', () => {
+            const stored = localStorage.getItem('hillstone_press_items');
+            const count = stored ? JSON.parse(stored).length : 0;
+            document.getElementById('currentCount').textContent = count + '개';
+        });
+
+        async function loadDirectly() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = '<div class="info">⏳ 다운로드 중...</div>';
+
+            try {
+                // GitHub Raw URL에서 직접 다운로드
+                const url = 'https://raw.githubusercontent.com/harhie/hillstone-presskit/main/js/main.js';
+                
+                const response = await fetch(url, {
+                    cache: 'no-cache',
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const text = await response.text();
+                console.log('Downloaded:', text.length, 'bytes');
+
+                // getSampleData 함수 전체 추출 - 더 정확한 정규식
+                const functionRegex = /function\s+getSampleData\s*\(\s*\)\s*\{[\s\S]*?\n\}/m;
+                const functionMatch = text.match(functionRegex);
+
+                if (!functionMatch) {
+                    throw new Error('getSampleData 함수를 찾을 수 없습니다');
+                }
+
+                console.log('Function found');
+
+                // return 문 추출 - 개선된 정규식
+                const returnRegex = /return\s+(\[[\s\S]*?\])\s*;/;
+                const returnMatch = functionMatch[0].match(returnRegex);
+
+                if (!returnMatch) {
+                    throw new Error('return 문을 찾을 수 없습니다');
+                }
+
+                const arrayStr = returnMatch[1];
+                console.log('Array extracted, length:', arrayStr.length);
+
+                // 안전하게 평가
+                let items;
+                try {
+                    // generateId 함수 정의 (필요시)
+                    function generateId() {
+                        return 'id_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                    }
+
+                    // 배열 평가
+                    items = eval('(' + arrayStr + ')');
+                    
+                    console.log('Eval successful, items:', items.length);
+                } catch (e) {
+                    console.error('Eval error:', e);
+                    throw new Error('배열 파싱 실패: ' + e.message);
+                }
+
+                // 검증
+                if (!Array.isArray(items)) {
+                    throw new Error('배열이 아닙니다');
+                }
+
+                if (items.length === 0) {
+                    throw new Error('데이터가 비어있습니다');
+                }
+
+                console.log('Items validated:', items.length);
+
+                // LocalStorage에 저장 - 여러 번 시도
+                for (let i = 0; i < 3; i++) {
+                    try {
+                        localStorage.setItem('hillstone_press_items', JSON.stringify(items));
+                        console.log('Saved to LocalStorage, attempt', i + 1);
+                        
+                        // 저장 확인
+                        const verification = localStorage.getItem('hillstone_press_items');
+                        const verifiedItems = JSON.parse(verification);
+                        
+                        if (verifiedItems.length === items.length) {
+                            console.log('Verification successful!');
+                            break;
+                        } else {
+                            console.warn('Verification failed, retrying...');
+                        }
+                    } catch (e) {
+                        console.error('Save error:', e);
+                        if (i === 2) throw e;
+                    }
+                }
+
+                // 최종 확인
+                const finalCheck = localStorage.getItem('hillstone_press_items');
+                const finalItems = JSON.parse(finalCheck);
+
+                statusDiv.innerHTML = `
+                    <div class="success">
+                        <strong>✅ 성공!</strong><br>
+                        <strong>${finalItems.length}개</strong> 기사를 LocalStorage에 저장했습니다!<br><br>
+                        <strong>검증 완료:</strong><br>
+                        - 다운로드: ${items.length}개<br>
+                        - 저장됨: ${finalItems.length}개<br>
+                        - 일치: ${items.length === finalItems.length ? '✅' : '❌'}<br><br>
+                        <strong>🎉 다음 단계:</strong><br>
+                        1. <code>newsroom.html</code>을 열어주세요<br>
+                        2. <strong>Ctrl+Shift+R</strong>로 완전 새로고침<br>
+                        3. 전체(${finalItems.length}) 표시 확인!<br><br>
+                        <strong>카테고리별:</strong><br>
+                        - 기사: ${finalItems.filter(i => i.category === 'article').length}개<br>
+                        - 해외기사: ${finalItems.filter(i => i.category === 'foreign').length}개<br>
+                        - 공지: ${finalItems.filter(i => i.category === 'photo').length}개<br>
+                        - 영상: ${finalItems.filter(i => i.category === 'video').length}개
+                    </div>
+                `;
+
+                // 현재 개수 업데이트
+                document.getElementById('currentCount').textContent = finalItems.length + '개';
+
+            } catch (error) {
+                console.error('Error:', error);
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <strong>❌ 실패!</strong><br>
+                        ${error.message}<br><br>
+                        <strong>F12 콘솔을 확인하세요.</strong>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

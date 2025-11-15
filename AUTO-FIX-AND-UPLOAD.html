@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자동 복구 & GitHub 업로드</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 900px;
+            width: 100%;
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        .subtitle {
+            color: #6c757d;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .step {
+            margin: 25px 0;
+            padding: 25px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+        .step h2 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border-radius: 50%;
+            margin-right: 12px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-success {
+            background: #28a745;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        .btn-danger {
+            background: #dc3545;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        .status {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 2px solid #bee5eb;
+        }
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffeaa7;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            max-height: 400px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .input-group {
+            margin: 15px 0;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .progress {
+            width: 100%;
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 자동 복구 & GitHub 업로드</h1>
+        <p class="subtitle">인코딩 오류를 자동으로 복구하고 GitHub에 직접 업로드합니다</p>
+        
+        <div class="step">
+            <h2><span class="step-number">1</span>GitHub 설정 확인</h2>
+            <div class="input-group">
+                <label>GitHub Token (repo 권한 필요)</label>
+                <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx">
+            </div>
+            <div class="input-group">
+                <label>Repository Owner</label>
+                <input type="text" id="githubOwner" value="harhie">
+            </div>
+            <div class="input-group">
+                <label>Repository Name</label>
+                <input type="text" id="githubRepo" value="hillstone-presskit">
+            </div>
+            <div class="input-group">
+                <label>Branch</label>
+                <input type="text" id="githubBranch" value="main">
+            </div>
+            <button onclick="loadSettings()">저장된 설정 불러오기</button>
+            <button onclick="saveSettings()">설정 저장</button>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">2</span>자동 복구 실행</h2>
+            <p style="margin-bottom: 15px;">현재 main.js를 다운로드하여 한글 인코딩을 복구한 후 GitHub에 자동으로 업로드합니다.</p>
+            <button class="btn-success" onclick="autoFixAndUpload()" id="fixBtn">
+                🔧 자동 복구 & 업로드 시작
+            </button>
+            <div id="progress" style="display: none;">
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar">0%</div>
+                </div>
+            </div>
+            <div id="result"></div>
+        </div>
+
+        <div class="step">
+            <h2><span class="step-number">3</span>결과 확인</h2>
+            <button onclick="window.open('newsroom.html', '_blank')">뉴스룸 페이지 열기</button>
+            <button onclick="window.open('newsroom-admin.html', '_blank')">관리자 페이지 열기</button>
+        </div>
+    </div>
+
+    <script>
+        function loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('hillstone_github_settings') || '{}');
+            document.getElementById('githubToken').value = settings.token || '';
+            document.getElementById('githubOwner').value = settings.owner || 'harhie';
+            document.getElementById('githubRepo').value = settings.repo || 'hillstone-presskit';
+            document.getElementById('githubBranch').value = settings.branch || 'main';
+            
+            showResult('info', '✅ 저장된 설정을 불러왔습니다.');
+        }
+        
+        function saveSettings() {
+            const settings = {
+                token: document.getElementById('githubToken').value.trim(),
+                owner: document.getElementById('githubOwner').value.trim(),
+                repo: document.getElementById('githubRepo').value.trim(),
+                branch: document.getElementById('githubBranch').value.trim()
+            };
+            
+            if (!settings.token) {
+                showResult('error', '❌ GitHub Token을 입력해주세요.');
+                return;
+            }
+            
+            localStorage.setItem('hillstone_github_settings', JSON.stringify(settings));
+            showResult('success', '✅ 설정이 저장되었습니다.');
+        }
+        
+        function setProgress(percent, text) {
+            const progressDiv = document.getElementById('progress');
+            const progressBar = document.getElementById('progressBar');
+            progressDiv.style.display = 'block';
+            progressBar.style.width = percent + '%';
+            progressBar.textContent = text || (percent + '%');
+        }
+        
+        function showResult(type, message) {
+            const result = document.getElementById('result');
+            result.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+        
+        async function autoFixAndUpload() {
+            const token = document.getElementById('githubToken').value.trim();
+            const owner = document.getElementById('githubOwner').value.trim();
+            const repo = document.getElementById('githubRepo').value.trim();
+            const branch = document.getElementById('githubBranch').value.trim();
+            
+            if (!token || !owner || !repo || !branch) {
+                showResult('error', '❌ 모든 GitHub 설정을 입력해주세요.');
+                return;
+            }
+            
+            const fixBtn = document.getElementById('fixBtn');
+            fixBtn.disabled = true;
+            fixBtn.textContent = '처리 중...';
+            
+            try {
+                // Step 1: Download current main.js
+                setProgress(20, '1/5: main.js 다운로드 중...');
+                showResult('info', '📥 현재 main.js 파일을 다운로드하는 중...');
+                
+                const downloadResponse = await fetch('js/main.js?_=' + Date.now());
+                if (!downloadResponse.ok) {
+                    throw new Error('main.js 다운로드 실패');
+                }
+                let content = await downloadResponse.text();
+                
+                // Step 2: Fix encoding
+                setProgress(40, '2/5: 인코딩 복구 중...');
+                showResult('info', '🔧 한글 인코딩을 복구하는 중...');
+                
+                const lines = content.split('\n');
+                let fixed = false;
+                
+                for (let i = 0; i < lines.length; i++) {
+                    if (lines[i].includes('categoryLabels') && lines[i].includes('article:')) {
+                        const oldLine = lines[i];
+                        lines[i] = "    const categoryLabels = {article: '기사', foreign: '해외기사', photo: '공지', video: '영상'};";
+                        fixed = true;
+                        console.log('수정된 라인:', i + 1);
+                        console.log('이전:', oldLine);
+                        console.log('이후:', lines[i]);
+                        break;
+                    }
+                }
+                
+                if (!fixed) {
+                    throw new Error('categoryLabels 라인을 찾을 수 없습니다.');
+                }
+                
+                const fixedContent = lines.join('\n');
+                
+                // Step 3: Get current file SHA from GitHub
+                setProgress(60, '3/5: GitHub 파일 정보 가져오는 중...');
+                showResult('info', '📡 GitHub에서 파일 정보를 가져오는 중...');
+                
+                const getUrl = `https://api.github.com/repos/${owner}/${repo}/contents/js/main.js?ref=${branch}&_=${Date.now()}`;
+                const getResponse = await fetch(getUrl, {
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    },
+                    cache: 'no-cache'
+                });
+                
+                if (!getResponse.ok) {
+                    throw new Error(`GitHub API 오류: ${getResponse.status} ${getResponse.statusText}`);
+                }
+                
+                const fileData = await getResponse.json();
+                const fileSha = fileData.sha;
+                
+                // Step 4: Encode content properly
+                setProgress(80, '4/5: UTF-8 인코딩 중...');
+                showResult('info', '🔠 UTF-8로 인코딩하는 중...');
+                
+                // Proper UTF-8 to Base64 encoding
+                const utf8Bytes = new TextEncoder().encode(fixedContent);
+                let binaryString = '';
+                for (let i = 0; i < utf8Bytes.length; i++) {
+                    binaryString += String.fromCharCode(utf8Bytes[i]);
+                }
+                const base64Content = btoa(binaryString);
+                
+                // Step 5: Upload to GitHub
+                setProgress(90, '5/5: GitHub에 업로드 중...');
+                showResult('info', '📤 GitHub에 업로드하는 중...');
+                
+                const updateUrl = `https://api.github.com/repos/${owner}/${repo}/contents/js/main.js`;
+                const updateResponse = await fetch(updateUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Fix UTF-8 encoding for Korean characters (categoryLabels)',
+                        content: base64Content,
+                        sha: fileSha,
+                        branch: branch
+                    })
+                });
+                
+                if (!updateResponse.ok) {
+                    const errorData = await updateResponse.json();
+                    throw new Error(`업로드 실패: ${errorData.message || updateResponse.statusText}`);
+                }
+                
+                const updateData = await updateResponse.json();
+                
+                // Complete
+                setProgress(100, '완료!');
+                showResult('success', `
+                    ✅ 성공적으로 복구 및 업로드되었습니다!<br><br>
+                    <strong>변경 사항:</strong><br>
+                    • Commit: ${updateData.commit.sha.substring(0, 7)}<br>
+                    • URL: <a href="${updateData.content.html_url}" target="_blank">${updateData.content.html_url}</a><br><br>
+                    <strong>다음 단계:</strong><br>
+                    1. 브라우저 캐시 삭제 (Ctrl+Shift+Delete)<br>
+                    2. 뉴스룸 페이지 새로고침하여 한글이 올바르게 표시되는지 확인<br>
+                    3. 앞으로 관리자 페이지에서 동기화하면 올바른 인코딩이 유지됩니다
+                `);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                setProgress(0, '오류 발생');
+                document.getElementById('progress').style.display = 'none';
+                showResult('error', `❌ 오류 발생: ${error.message}<br><br>콘솔(F12)에서 상세 로그를 확인하세요.`);
+            } finally {
+                fixBtn.disabled = false;
+                fixBtn.textContent = '🔧 자동 복구 & 업로드 시작';
+            }
+        }
+        
+        // Auto-load settings on page load
+        window.addEventListener('load', function() {
+            const settings = localStorage.getItem('hillstone_github_settings');
+            if (settings) {
+                loadSettings();
+            }
+        });
+    </script>
+</body>
+</html>

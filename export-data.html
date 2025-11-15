@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>데이터 추출 도구</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        button {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        button:hover {
+            background: #e85a2a;
+        }
+        textarea {
+            width: 100%;
+            height: 400px;
+            font-family: monospace;
+            font-size: 12px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+        .info {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>프레스킷 데이터 추출 도구</h1>
+    
+    <div class="info">
+        <h3>사용 방법:</h3>
+        <ol>
+            <li><strong>"데이터 추출하기"</strong> 버튼을 클릭하세요</li>
+            <li>아래 텍스트박스에 LocalStorage의 모든 데이터가 표시됩니다</li>
+            <li>데이터를 복사해서 저에게 보내주세요</li>
+        </ol>
+    </div>
+
+    <button onclick="exportData()">📥 데이터 추출하기</button>
+    <button onclick="copyToClipboard()">📋 클립보드에 복사</button>
+    
+    <h3>추출된 데이터:</h3>
+    <textarea id="output" placeholder="'데이터 추출하기' 버튼을 클릭하세요..."></textarea>
+    
+    <div id="stats" style="margin-top: 20px; font-weight: bold;"></div>
+
+    <script>
+        function exportData() {
+            const data = localStorage.getItem('hillstone_press_items');
+            const output = document.getElementById('output');
+            const stats = document.getElementById('stats');
+            
+            if (data) {
+                try {
+                    const items = JSON.parse(data);
+                    output.value = JSON.stringify(items, null, 2);
+                    stats.innerHTML = `✅ 총 ${items.length}개의 항목을 추출했습니다!`;
+                    stats.style.color = 'green';
+                } catch (e) {
+                    output.value = 'Error: ' + e.message;
+                    stats.innerHTML = '❌ 데이터 파싱 오류';
+                    stats.style.color = 'red';
+                }
+            } else {
+                output.value = '데이터가 없습니다. newsroom-admin.html에서 먼저 데이터를 추가하세요.';
+                stats.innerHTML = '⚠️ LocalStorage에 데이터가 없습니다';
+                stats.style.color = 'orange';
+            }
+        }
+        
+        function copyToClipboard() {
+            const output = document.getElementById('output');
+            if (output.value) {
+                output.select();
+                document.execCommand('copy');
+                alert('클립보드에 복사되었습니다!');
+            } else {
+                alert('먼저 데이터를 추출하세요.');
+            }
+        }
+    </script>
+</body>
+</html>

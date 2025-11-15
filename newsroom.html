@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hillstone Partners - Press Kit</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Override for iframe embedding */
+        body {
+            background: white;
+            margin: 0;
+            padding: 0;
+        }
+        .main-content {
+            padding: 0;
+        }
+        .container {
+            max-width: 64rem; /* 1024px - matches max-w-4xl, narrower for better readability */
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Presskit Header Styles */
+        .presskit-header {
+            text-align: center;
+            padding: 2rem 0 1.5rem;
+        }
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #e5e7eb 20%, #e5e7eb 80%, transparent);
+            margin: 0 auto 2rem;
+            max-width: 64rem; /* matches max-w-4xl */
+        }
+        .presskit-title {
+            font-size: 3.75rem;
+            font-weight: 900;
+            color: #000;
+            letter-spacing: -0.025em;
+            margin-bottom: 1rem;
+        }
+        .presskit-underline {
+            width: 6rem;
+            height: 4px;
+            background: #ff6b35;
+            margin: 0 auto 0.5rem;
+        }
+        .presskit-subtitle {
+            font-size: 1.125rem;
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            .presskit-title {
+                font-size: 2.5rem;
+            }
+            .presskit-subtitle {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Presskit Header -->
+    <div class="presskit-header">
+        <div class="section-divider"></div>
+        <h2 class="presskit-title">PRESSKIT</h2>
+        <div class="presskit-underline"></div>
+        <p class="presskit-subtitle">언론 보도 및 미디어 아카이브</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="category-tabs">
+                    <button class="tab-btn active" data-category="all">전체</button>
+                    <button class="tab-btn" data-category="article">기사</button>
+                    <button class="tab-btn" data-category="foreign">해외기사</button>
+                    <button class="tab-btn" data-category="photo">공지</button>
+                    <button class="tab-btn" data-category="video">영상</button>
+                </div>
+            </div>
+
+            <!-- Press Items List -->
+            <div id="pressItemsList" class="press-list">
+                <!-- Items will be dynamically loaded here -->
+            </div>
+
+            <!-- Pagination -->
+            <div id="pagination" class="pagination" style="display: none;">
+                <!-- Pagination will be dynamically loaded here -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <i class="fas fa-folder-open"></i>
+                <p>검색 결과가 없습니다.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Detail Modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="modalBody" class="modal-body">
+                <!-- Detail content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    
+    <!-- iframe height auto-resize -->
+    <script>
+        function sendHeight() {
+            if (window.parent !== window) {
+                const height = document.documentElement.scrollHeight;
+                window.parent.postMessage({ type: 'resize', height: height }, '*');
+            }
+        }
+        
+        // Send height on load and when content changes
+        window.addEventListener('load', sendHeight);
+        window.addEventListener('resize', sendHeight);
+        
+        // MutationObserver to detect DOM changes
+        const heightObserver = new MutationObserver(sendHeight);
+        heightObserver.observe(document.body, { 
+            childList: true, 
+            subtree: true, 
+            attributes: true 
+        });
+        
+        // Send height periodically for dynamic content
+        setInterval(sendHeight, 1000);
+    </script>
+</body>
+</html>

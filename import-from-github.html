@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import from GitHub</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #ff6b35;
+            margin-bottom: 20px;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+        .warning {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffc107;
+        }
+        .btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            background: #e85a2a;
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        #status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        .loading {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📥 Import Data from GitHub</h1>
+        
+        <div class="info">
+            <strong>💡 사용 방법:</strong><br>
+            1. GitHub 저장소 정보를 입력합니다 (기본값이 이미 입력되어 있습니다)<br>
+            2. "Import from GitHub" 버튼을 클릭합니다<br>
+            3. GitHub의 js/main.js에서 getSampleData()를 읽어옵니다<br>
+            4. LocalStorage에 자동으로 저장됩니다<br>
+            5. 완료!
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ 주의:</strong><br>
+            이 작업은 현재 LocalStorage의 데이터를 덮어씁니다!<br>
+            현재 LocalStorage에 <span id="currentCount">?</span>개의 기사가 있습니다.
+        </div>
+
+        <div class="form-group">
+            <label for="owner">Repository Owner:</label>
+            <input type="text" id="owner" value="harhie">
+        </div>
+
+        <div class="form-group">
+            <label for="repo">Repository Name:</label>
+            <input type="text" id="repo" value="hillstone-presskit">
+        </div>
+
+        <div class="form-group">
+            <label for="branch">Branch:</label>
+            <input type="text" id="branch" value="main">
+        </div>
+
+        <button class="btn" id="importBtn" onclick="importFromGithub()">📥 Import from GitHub</button>
+        
+        <div id="status"></div>
+    </div>
+
+    <script>
+        // 현재 LocalStorage 개수 표시
+        window.addEventListener('load', function() {
+            const stored = localStorage.getItem('hillstone_press_items');
+            const count = stored ? JSON.parse(stored).length : 0;
+            document.getElementById('currentCount').textContent = count;
+        });
+
+        async function importFromGithub() {
+            const statusDiv = document.getElementById('status');
+            const importBtn = document.getElementById('importBtn');
+            
+            const owner = document.getElementById('owner').value.trim();
+            const repo = document.getElementById('repo').value.trim();
+            const branch = document.getElementById('branch').value.trim();
+
+            if (!owner || !repo || !branch) {
+                statusDiv.innerHTML = '<div class="error">❌ 모든 필드를 입력해주세요!</div>';
+                return;
+            }
+
+            importBtn.disabled = true;
+            statusDiv.innerHTML = '<div class="loading">⏳ GitHub에서 데이터를 가져오는 중...</div>';
+
+            try {
+                // GitHub에서 main.js 파일 가져오기
+                const url = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/js/main.js`;
+                console.log('Fetching from:', url);
+
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const content = await response.text();
+                console.log('File size:', content.length, 'bytes');
+
+                // getSampleData() 함수에서 return 배열 부분만 추출
+                const regex = /function getSampleData\(\)\s*\{[\s\S]*?return\s*(\[[\s\S]*?\])\s*;?\s*\}/;
+                const match = content.match(regex);
+
+                if (!match || !match[1]) {
+                    throw new Error('getSampleData() 함수를 찾을 수 없습니다!');
+                }
+
+                console.log('Found getSampleData() function');
+
+                // return 문의 배열 부분만 가져오기
+                const arrayCode = match[1];
+                console.log('Array code length:', arrayCode.length);
+                
+                // JSON.parse를 사용하기 위해 JavaScript 객체를 JSON으로 변환
+                // 작은따옴표를 큰따옴표로 변환하고 undefined/null 처리
+                let items;
+                try {
+                    // eval 대신 안전하게 파싱
+                    const func = new Function('return ' + arrayCode);
+                    items = func();
+                } catch (e) {
+                    throw new Error('데이터 파싱 실패: ' + e.message);
+                }
+                
+                if (!items || !Array.isArray(items)) {
+                    throw new Error('유효한 데이터가 아닙니다!');
+                }
+
+                console.log('Imported items:', items.length);
+
+                // LocalStorage에 저장
+                localStorage.setItem('hillstone_press_items', JSON.stringify(items));
+
+                statusDiv.innerHTML = `
+                    <div class="success">
+                        <strong>✅ 성공!</strong><br>
+                        GitHub에서 <strong>${items.length}개</strong>의 기사를 가져왔습니다!<br><br>
+                        <strong>다음 단계:</strong><br>
+                        1. <code>newsroom.html</code>을 새로고침하여 확인하세요<br>
+                        2. <code>newsroom-admin.html</code>에서도 확인하세요<br>
+                        3. 카테고리별 개수가 정상적으로 표시되는지 확인하세요
+                    </div>
+                `;
+
+                // 현재 개수 업데이트
+                document.getElementById('currentCount').textContent = items.length;
+
+            } catch (error) {
+                console.error('Error:', error);
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <strong>❌ 실패!</strong><br>
+                        ${error.message}<br><br>
+                        <strong>해결 방법:</strong><br>
+                        1. 저장소 정보가 정확한지 확인하세요<br>
+                        2. GitHub 저장소가 public인지 확인하세요<br>
+                        3. js/main.js 파일이 존재하는지 확인하세요<br>
+                        4. Branch 이름이 정확한지 확인하세요 (main 또는 master)<br><br>
+                        <strong>콘솔(F12)에서 상세 로그를 확인하세요.</strong>
+                    </div>
+                `;
+            } finally {
+                importBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>긴급 수정 - 한글 복구</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            color: #6c757d;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 2px solid #bee5eb;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-top: 15px;
+            text-align: left;
+        }
+        .step {
+            text-align: left;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .step h3 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚨 긴급 수정</h1>
+        <p class="subtitle">main.js 한글 인코딩 즉시 복구</p>
+        
+        <button onclick="fixNow()" style="font-size: 24px; padding: 25px 50px;">
+            🔧 지금 바로 수정하기
+        </button>
+        
+        <div id="result"></div>
+        
+        <div class="step" style="margin-top: 40px;">
+            <h3>📝 작동 원리</h3>
+            <p>1. 현재 main.js 파일 다운로드</p>
+            <p>2. 1179번 줄 찾기 (categoryLabels)</p>
+            <p>3. 깨진 한글 → 올바른 한글로 교체</p>
+            <p>4. 수정된 파일 자동 다운로드</p>
+            <p>5. js/ 폴더에 덮어쓰기</p>
+        </div>
+    </div>
+
+    <script>
+        async function fixNow() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<div class="result info">🔄 처리 중...</div>';
+            
+            try {
+                // 1. Download main.js
+                const response = await fetch('js/main.js?_=' + Date.now());
+                if (!response.ok) throw new Error('main.js 다운로드 실패');
+                
+                let content = await response.text();
+                
+                // 2. Find and replace the corrupted line
+                const lines = content.split('\n');
+                let fixedCount = 0;
+                
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    
+                    // Find categoryLabels line
+                    if (line.includes('categoryLabels') && line.includes('article:')) {
+                        const oldLine = line;
+                        
+                        // Replace with correct Korean
+                        lines[i] = "    const categoryLabels = {article: '기사', foreign: '해외기사', photo: '공지', video: '영상'};";
+                        
+                        fixedCount++;
+                        
+                        console.log('수정 완료!');
+                        console.log('이전:', oldLine);
+                        console.log('이후:', lines[i]);
+                        break;
+                    }
+                }
+                
+                if (fixedCount === 0) {
+                    throw new Error('categoryLabels 라인을 찾을 수 없습니다.');
+                }
+                
+                // 3. Create fixed content
+                const fixedContent = lines.join('\n');
+                
+                // 4. Download fixed file
+                const blob = new Blob([fixedContent], { type: 'text/javascript;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'main.js';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                // 5. Show success
+                result.innerHTML = `
+                    <div class="result success">
+                        <h3>✅ 수정 완료!</h3>
+                        <p><strong>main.js</strong> 파일이 다운로드되었습니다.</p>
+                        <br>
+                        <h4>📋 다음 단계:</h4>
+                        <ol style="margin-left: 20px; margin-top: 10px;">
+                            <li style="margin: 8px 0;"><strong>다운로드한 main.js 파일을 프로젝트의 js/ 폴더에 복사</strong> (덮어쓰기)</li>
+                            <li style="margin: 8px 0;"><strong>브라우저 캐시 삭제:</strong> Ctrl+Shift+Delete</li>
+                            <li style="margin: 8px 0;"><strong>newsroom.html 새로고침:</strong> Ctrl+F5</li>
+                            <li style="margin: 8px 0;"><strong>확인:</strong> 카테고리가 "기사", "해외기사", "공지", "영상"으로 표시되는지 확인</li>
+                        </ol>
+                        <pre>수정된 라인:
+const categoryLabels = {
+    article: '기사',
+    foreign: '해외기사',
+    photo: '공지',
+    video: '영상'
+};</pre>
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                result.innerHTML = `
+                    <div class="result error">
+                        <h3>❌ 오류 발생</h3>
+                        <p>${error.message}</p>
+                        <br>
+                        <p><strong>대안:</strong></p>
+                        <ol style="margin-left: 20px; margin-top: 10px;">
+                            <li>AUTO-FIX-AND-UPLOAD.html 사용</li>
+                            <li>또는 js/main.js 파일을 직접 편집:
+                                <pre>1179번 줄을 다음으로 교체:
+const categoryLabels = {article: '기사', foreign: '해외기사', photo: '공지', video: '영상'};</pre>
+                            </li>
+                        </ol>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
