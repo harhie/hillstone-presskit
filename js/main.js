@@ -1162,7 +1162,7 @@ function renderPressItems() {
 }
 
 function createItemHTML(item) {
-    const categoryLabels = {article: 'ê¸°ì¬', foreign: 'í´ì¸ê¸°ì¬', photo: 'ê³µì§', video: 'ìì'};
+    const categoryLabels = {article: 'ÃªÂ¸Â°Ã¬ÂÂ¬', foreign: 'Ã­ÂÂ´Ã¬ÂÂ¸ÃªÂ¸Â°Ã¬ÂÂ¬', photo: 'ÃªÂ³ÂµÃ¬Â§Â', video: 'Ã¬ÂÂÃ¬ÂÂ'};
     const categoryIcons = {article: 'fa-newspaper', foreign: 'fa-globe', photo: 'fa-bullhorn', video: 'fa-video'};
     return `
         <div class="press-item" data-id="${item.id}">
