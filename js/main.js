@@ -28,17 +28,23 @@ function initializeEventListeners() {
 }
 
 function loadPressItems() {
+    console.log('📥 loadPressItems() 시작');
     const stored = localStorage.getItem('hillstone_press_items');
     if (stored) {
         try {
             allItems = JSON.parse(stored);
+            console.log('✅ LocalStorage 데이터 로드:', allItems.length, '개');
         } catch (e) {
-            console.error('Error parsing stored data:', e);
+            console.error('❌ Error parsing stored data:', e);
             allItems = getSampleData();
+            console.log('📦 getSampleData() 사용:', allItems.length, '개');
         }
     } else {
         allItems = getSampleData();
+        console.log('📦 getSampleData() 사용 (LocalStorage 없음):', allItems.length, '개');
     }
+    console.log('🔢 allItems 최종:', allItems.length, '개');
+    console.log('첫 번째 기사:', allItems[0]?.title);
     updateCategoryCounts();
     renderPressItems();
 }
@@ -1142,11 +1148,15 @@ function updateCategoryCounts() {
 }
 
 function renderPressItems() {
-    const container = document.getElementById('pressItemsContainer');
+    console.log('🎨 renderPressItems() 시작');
+    const container = document.getElementById('pressItemsList');
+    console.log('📦 Container 요소:', container);
     const emptyState = document.getElementById('emptyState');
     let filteredItems = currentCategory === 'all' ? allItems : allItems.filter(item => item.category === currentCategory);
+    console.log('🔍 필터링된 기사:', filteredItems.length, '개 (카테고리:', currentCategory + ')');
     filteredItems.sort((a, b) => new Date(b.date) - new Date(a.date));
     if (filteredItems.length === 0) {
+        console.log('⚠️ 기사 없음 - 빈 상태 표시');
         container.innerHTML = '';
         emptyState.style.display = 'block';
         document.getElementById('pagination').style.display = 'none';
@@ -1156,7 +1166,11 @@ function renderPressItems() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const pageItems = filteredItems.slice(startIndex, endIndex);
-    container.innerHTML = pageItems.map(item => createItemHTML(item)).join('');
+    console.log('📄 현재 페이지 기사:', pageItems.length, '개 (페이지:', currentPage + ')');
+    const html = pageItems.map(item => createItemHTML(item)).join('');
+    console.log('📝 생성된 HTML 길이:', html.length);
+    container.innerHTML = html;
+    console.log('✅ HTML 삽입 완료');
     renderPagination(filteredItems.length);
     attachItemClickHandlers();
 }
